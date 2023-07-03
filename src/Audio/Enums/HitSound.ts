@@ -1,5 +1,5 @@
 /**
- * Hit sound types.
+ * Legacy hit sound types.
  */
 export enum HitSound {
   None = 0,

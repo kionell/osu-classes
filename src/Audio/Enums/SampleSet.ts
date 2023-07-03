@@ -1,5 +1,5 @@
 /**
- * Types of sample set.
+ * Legacy sample bank types.
  */
 export enum SampleSet {
   None,
