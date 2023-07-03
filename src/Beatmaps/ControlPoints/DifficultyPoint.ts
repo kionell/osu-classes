@@ -69,12 +69,15 @@ export class DifficultyPoint extends ControlPoint {
       && existing.generateTicks === this.generateTicks;
   }
 
-  /**
-   * @param other Other difficulty control point.
-   * @returns If two difficulty control points are equal.
-   */
+  copyFrom(other: DifficultyPoint): void {
+    super.copyFrom(other);
+
+    this.sliderVelocity = other.sliderVelocity;
+  }
+
   equals(other: DifficultyPoint): boolean {
-    return other instanceof DifficultyPoint
+    return super.equals(other)
+      && other instanceof DifficultyPoint
       && this.sliderVelocity === other.sliderVelocity;
   }
 }
