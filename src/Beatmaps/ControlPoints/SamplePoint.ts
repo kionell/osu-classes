@@ -9,7 +9,16 @@ export class SamplePoint extends ControlPoint {
   /**
    * The default instance of a sample point.
    */
-  static default: SamplePoint = new SamplePoint();
+  static readonly DEFAULT: SamplePoint = new SamplePoint();
+
+  /**
+   * The default instance of a sample point.
+   * Use {@link DEFAULT} instead.
+   * @deprecated Since 3.1.0
+   */
+  static get default(): SamplePoint {
+    return SamplePoint.DEFAULT;
+  }
 
   /**
    * The type of a sample point.

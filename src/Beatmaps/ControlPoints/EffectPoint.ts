@@ -9,7 +9,16 @@ export class EffectPoint extends ControlPoint {
   /**
    * The default instance of an effect point.
    */
-  static default: EffectPoint = new EffectPoint();
+  static readonly DEFAULT: EffectPoint = new EffectPoint();
+
+  /**
+   * The default instance of an effect point.
+   * Use {@link DEFAULT} instead.
+   * @deprecated Since 3.1.0
+   */
+  static get default(): EffectPoint {
+    return EffectPoint.DEFAULT;
+  }
 
   /**
    * The type of an effect point.

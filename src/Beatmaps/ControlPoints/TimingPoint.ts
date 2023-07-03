@@ -10,7 +10,16 @@ export class TimingPoint extends ControlPoint {
   /**
    * The default instance of a timing point.
    */
-  static default: TimingPoint = new TimingPoint();
+  static readonly DEFAULT: TimingPoint = new TimingPoint();
+
+  /**
+   * The default instance of a timing point.
+   * Use {@link DEFAULT} instead.
+   * @deprecated Since 3.1.0
+   */
+  static get default(): TimingPoint {
+    return TimingPoint.DEFAULT;
+  }
 
   /**
    * The type of a timing point.
