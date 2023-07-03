@@ -1,28 +1,36 @@
-import { SampleSet } from '../Enums/SampleSet';
+import { SampleSet } from './Enums/SampleSet';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { HitSample } from './HitSample';
 
 export class SampleBank {
   /**
-   * The filepath of this sample bank.
+   * An optional overriding filename which causes all 
+   * bank/sample specifications to be ignored.
    */
   filename = '';
 
   /**
-   * The volume of the bank.
+   * Hit sample volume (0-100).
+   * See {@link HitSample.volume}.
    */
   volume = 100;
 
   /**
-   * The normal sample set of the bank.
+   * The bank identifier to use for the base ("hitnormal") sample.
+   * Transferred to the bank of a hit sample when appropriate.
    */
-  normalSet: SampleSet = SampleSet.Normal;
+  normalSet: SampleSet = SampleSet.None;
 
   /**
-   * The addition sample set of the bank.
+   * The bank identifier to use for additions ("hitwhistle", "hitfinish", "hitclap").
+   * Transferred to the bank of a hit sample when appropriate.
    */
-  additionSet: SampleSet = SampleSet.Normal;
+  additionSet: SampleSet = SampleSet.None;
 
   /**
-   * Custom index of the sample bank.
+   * The index of the custom sample bank. Is only used if 2 or above for "reasons".
+   * This will add a suffix to lookups, allowing extended bank lookups (ie. "normal-hitnormal-2").
+   * See {@link HitSample.suffix}.
    */
   customIndex = 0;
 
@@ -32,14 +40,6 @@ export class SampleBank {
    * @returns A copied sample bank.
    */
   clone(): SampleBank {
-    const cloned = new SampleBank();
-
-    cloned.filename = this.filename;
-    cloned.volume = this.volume;
-    cloned.normalSet = this.normalSet;
-    cloned.additionSet = this.additionSet;
-    cloned.customIndex = this.customIndex;
-
-    return cloned;
+    return Object.assign(new SampleBank(), this);
   }
 }
