@@ -217,6 +217,23 @@ export class ControlPointInfo {
     return true;
   }
 
+  /**
+   * Removes a group from the list and dettaches all control points from it.
+   * @param group A group.
+   */
+  removeGroup(group: ControlPointGroup): void {
+    group.controlPoints.forEach((item) => group.remove(item));
+
+    group.onItemAdd = null;
+    group.onItemRemove = null;
+
+    const groupIndex = this.groups.findIndex((g) => g === group);
+
+    if (groupIndex >= 0) {
+      this.groups.splice(groupIndex, 1);
+    }
+  }
+
   onGroupItemAdded(controlPoint: ControlPoint): void {
     this.getCurrentList(controlPoint).push(controlPoint);
   }
