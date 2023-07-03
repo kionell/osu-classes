@@ -13,6 +13,12 @@ export class TimingPoint extends ControlPoint {
   static readonly DEFAULT = new TimingPoint();
 
   /**
+   * Default length of a beat in milliseconds (60000 / 60). 
+   * Used whenever there is no beatmap or track playing.
+   */
+  static readonly DEFAULT_BEAT_LENGTH = 1000;
+
+  /**
    * The default instance of a timing point.
    * Use {@link DEFAULT} instead.
    * @deprecated Since 3.1.0
@@ -34,7 +40,7 @@ export class TimingPoint extends ControlPoint {
   /**
    * The beat length of this timing point. 
    */
-  private _beatLength = 1000;
+  private _beatLength = TimingPoint.DEFAULT_BEAT_LENGTH;
 
   get beatLength(): number {
     return this._beatLength;
