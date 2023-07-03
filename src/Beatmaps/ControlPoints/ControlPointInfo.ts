@@ -58,6 +58,9 @@ export class ControlPointInfo {
     if (!group) {
       group = new ControlPointGroup(time);
 
+      group.onItemAdd = this.onGroupItemAdded;
+      group.onItemRemove = this.onGroupItemRemoved;
+
       this.groups.push(group);
       this.groups.sort((a, b) => a.startTime - b.startTime);
     }
@@ -212,6 +215,18 @@ export class ControlPointInfo {
     this.groupAt(time).remove(point);
 
     return true;
+  }
+
+  onGroupItemAdded(controlPoint: ControlPoint): void {
+    this.getCurrentList(controlPoint).push(controlPoint);
+  }
+
+  onGroupItemRemoved(controlPoint: ControlPoint): void {
+    const list = this.getCurrentList(controlPoint);
+
+    const itemIndex = list.findIndex((c) => c === controlPoint);
+
+    if (itemIndex !== -1) list.splice(itemIndex, 1);
   }
 
   /**

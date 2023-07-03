@@ -39,6 +39,8 @@ export class ControlPointGroup {
     point.attachGroup(this);
 
     this.controlPoints.push(point);
+
+    if (this.onItemAdd) this.onItemAdd(point);
   }
 
   /**
@@ -54,6 +56,18 @@ export class ControlPointGroup {
       this.controlPoints.splice(index, 1);
 
       point.dettachGroup();
+
+      if (this.onItemRemove) this.onItemRemove(point);
     }
   }
+
+  /**
+   * Optional listener that will fire when a new control point will be add to this group.
+   */
+  onItemAdd: ((controlPoint: ControlPoint) => void) | null = null;
+
+  /**
+   * Optional listener that will fire when a control point will be removed from this group.
+   */
+  onItemRemove: ((controlPoint: ControlPoint) => void) | null = null;
 }
