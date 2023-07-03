@@ -32,6 +32,8 @@ export class EffectPoint extends ControlPoint {
 
   /**
    * Whether the first bar line of this control point is ignored.
+   * This property was moved to timing points.
+   * @deprecated Since 3.1.0
    */
   omitFirstBarLine = false;
 
@@ -54,13 +56,9 @@ export class EffectPoint extends ControlPoint {
    * @returns Whether the effect point is redundant.
    */
   isRedundant(existing: EffectPoint | null): boolean {
-    return (
-      !this.omitFirstBarLine
-        && existing !== null
-        && this.kiai === existing.kiai
-        && this.omitFirstBarLine === existing.omitFirstBarLine
-        && this.scrollSpeed === existing.scrollSpeed
-    );
+    return existing instanceof EffectPoint
+      && this.kiai === existing.kiai
+      && this.scrollSpeed === existing.scrollSpeed;
   }
 
   copyFrom(other: EffectPoint): void {

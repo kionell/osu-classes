@@ -27,6 +27,11 @@ export class TimingPoint extends ControlPoint {
   pointType = ControlPointType.TimingPoint;
 
   /**
+   * Whether the first bar line of this control point is ignored.
+   */
+  omitFirstBarLine = false;
+
+  /**
    * The beat length of this timing point. 
    */
   private _beatLength = 1000;
@@ -62,6 +67,7 @@ export class TimingPoint extends ControlPoint {
     super.copyFrom(other);
 
     this.timeSignature = other.timeSignature;
+    this.omitFirstBarLine = other.omitFirstBarLine;
     this.beatLength = other.beatLength;
   }
 
@@ -69,6 +75,7 @@ export class TimingPoint extends ControlPoint {
     return super.equals(other)
       && other instanceof TimingPoint
       && this.timeSignature === other.timeSignature
+      && this.omitFirstBarLine === other.omitFirstBarLine
       && this.beatLength === other.beatLength;
   }
 }
