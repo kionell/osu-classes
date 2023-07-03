@@ -61,6 +61,13 @@ export class ControlPointGroup {
     }
   }
 
+  equals(other: ControlPointGroup): boolean {
+    return other instanceof ControlPointGroup
+      && this.startTime === other.startTime
+      && this.controlPoints.length === other.controlPoints.length
+      && this.controlPoints.every((c, i) => c === other.controlPoints[i]);
+  }
+
   /**
    * Optional listener that will fire when a new control point will be add to this group.
    */
