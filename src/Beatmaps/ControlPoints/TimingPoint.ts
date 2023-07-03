@@ -32,11 +32,11 @@ export class TimingPoint extends ControlPoint {
   private _beatLength = 1000;
 
   get beatLength(): number {
-    return clamp(this._beatLength, 6, 60000);
+    return this._beatLength;
   }
 
   set beatLength(value: number) {
-    this._beatLength = value;
+    this._beatLength = clamp(value, 6, 60000);
   }
 
   /**
@@ -45,7 +45,7 @@ export class TimingPoint extends ControlPoint {
   timeSignature: TimeSignature = TimeSignature.SimpleQuadruple;
 
   /**
-   * The BPM of this timing point. 
+   * The BPM of this timing point.
    */
   get bpm(): number {
     return 60000 / this.beatLength;

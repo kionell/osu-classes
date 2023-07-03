@@ -41,11 +41,11 @@ export class EffectPoint extends ControlPoint {
   private _scrollSpeed = 1;
 
   get scrollSpeed(): number {
-    return clamp(this._scrollSpeed, 0.1, 10);
+    return this._scrollSpeed;
   }
 
   set scrollSpeed(value: number) {
-    this._scrollSpeed = value;
+    this._scrollSpeed = clamp(value, 0.1, 10);
   }
 
   /**

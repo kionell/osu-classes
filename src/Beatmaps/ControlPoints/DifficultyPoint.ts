@@ -43,12 +43,12 @@ export class DifficultyPoint extends ControlPoint {
    * The slider velocity at this difficulty point.
    */
   get sliderVelocity(): number {
-    // Imitate bindable value with range [0.1, 10].
-    return clamp(this._sliderVelocity, 0.1, 10);
+    return this._sliderVelocity;
   }
 
   set sliderVelocity(value: number) {
-    this._sliderVelocity = value;
+    // Imitate bindable value with range [0.1, 10].
+    this._sliderVelocity = clamp(value, 0.1, 10);
   }
 
   /**
