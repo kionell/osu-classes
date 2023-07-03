@@ -1,3 +1,4 @@
+export * from './Audio';
 export * from './Beatmaps';
 export * from './Difficulty';
 export * from './Mods';
