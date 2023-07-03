@@ -1,7 +1,5 @@
-export * from './Enums/HitSound';
 export * from './Enums/HitType';
 export * from './Enums/PathType';
-export * from './Enums/SampleSet';
 export * from './Enums/SliderEventType';
 export * from './EventGenerator';
 export * from './HitObject';
@@ -12,5 +10,4 @@ export * from './ISpinnableObject';
 export * from './Path/PathApproximator';
 export * from './Path/PathPoint';
 export * from './Path/SliderPath';
-export * from './Sounds';
 export * from './Types';

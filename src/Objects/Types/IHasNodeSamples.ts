@@ -1,4 +1,4 @@
-import { HitSample } from '../Sounds/HitSample';
+import { HitSample } from '../../Audio';
 
 /**
  * A hit object with node samples.

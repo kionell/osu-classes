@@ -1,6 +1,6 @@
 import { ControlPointType } from '../Enums/ControlPointType';
 import { ControlPoint } from './ControlPoint';
-import { SampleSet } from '../../Objects/Enums/SampleSet';
+import { SampleSet, HitSample } from '../../Audio';
 
 /**
  * A sample point.

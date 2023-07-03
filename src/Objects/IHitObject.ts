@@ -1,6 +1,5 @@
-import { HitSample } from './Sounds/HitSample';
 import { HitType } from './Enums/HitType';
-import { HitSound } from './Enums/HitSound';
+import { HitSound, HitSample } from '../Audio';
 import { HitWindows } from '../Scoring';
 
 /**

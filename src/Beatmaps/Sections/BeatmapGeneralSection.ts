@@ -1,4 +1,4 @@
-import { SampleSet } from '../../Objects/Enums/SampleSet';
+import { SampleSet } from '../../Audio';
 
 /**
  * A beatmap general section.
@@ -62,6 +62,11 @@ export class BeatmapGeneralSection {
    * do not override it (Normal, Soft, Drum).
    */
   sampleSet: SampleSet = SampleSet.Normal;
+
+  /**
+   * Default volume for all samples.
+   */
+  sampleVolume = 100;
 
   /**
    * Whether or not breaks have a letterboxing effect.
