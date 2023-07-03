@@ -66,7 +66,13 @@ export class HitSample {
   isLayered: boolean;
 
   /**
+   * The filename of this hit sample.
+   */
+  filename: string;
+
+  /**
    * The bank to load the sample from.
+   * Use {@link bank} instead.
    * @deprecated Since 3.1.0
    */
   sampleSet: string;
@@ -77,14 +83,9 @@ export class HitSample {
    */
   hitSound: string;
 
-  /**
-   * The filename of this hit sample.
-   */
-  filename: string;
-
   constructor(options?: Partial<HitSample>) {
     this.name = options?.name ?? '';
-    this.bank = options?.bank ?? '';
+    this.bank = options?.bank ?? options?.sampleSet ?? '';
     this.customBankIndex = options?.customBankIndex ?? options?.customIndex ?? 0;
     this.suffix = options?.suffix ?? '';
 
