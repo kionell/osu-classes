@@ -9,7 +9,7 @@ export class EffectPoint extends ControlPoint {
   /**
    * The default instance of an effect point.
    */
-  static readonly DEFAULT: EffectPoint = new EffectPoint();
+  static readonly DEFAULT = new EffectPoint();
 
   /**
    * The default instance of an effect point.
@@ -23,7 +23,7 @@ export class EffectPoint extends ControlPoint {
   /**
    * The type of an effect point.
    */
-  pointType: ControlPointType = ControlPointType.EffectPoint;
+  pointType = ControlPointType.EffectPoint;
 
   /**
    * Whether this control point enables kiai mode.

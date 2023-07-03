@@ -10,7 +10,7 @@ export class TimingPoint extends ControlPoint {
   /**
    * The default instance of a timing point.
    */
-  static readonly DEFAULT: TimingPoint = new TimingPoint();
+  static readonly DEFAULT = new TimingPoint();
 
   /**
    * The default instance of a timing point.
@@ -24,7 +24,7 @@ export class TimingPoint extends ControlPoint {
   /**
    * The type of a timing point.
    */
-  pointType: ControlPointType = ControlPointType.TimingPoint;
+  pointType = ControlPointType.TimingPoint;
 
   /**
    * The beat length of this timing point. 

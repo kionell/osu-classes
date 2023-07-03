@@ -9,7 +9,7 @@ export class SamplePoint extends ControlPoint {
   /**
    * The default instance of a sample point.
    */
-  static readonly DEFAULT: SamplePoint = new SamplePoint();
+  static readonly DEFAULT = new SamplePoint();
 
   /**
    * The default instance of a sample point.
@@ -23,7 +23,7 @@ export class SamplePoint extends ControlPoint {
   /**
    * The type of a sample point.
    */
-  pointType: ControlPointType = ControlPointType.SamplePoint;
+  pointType = ControlPointType.SamplePoint;
 
   /**
    * The sample bank of this sample point.

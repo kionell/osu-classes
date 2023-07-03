@@ -9,7 +9,7 @@ export class DifficultyPoint extends ControlPoint {
   /**
    * The default instance of a difficulty point.
    */
-  static readonly DEFAULT: DifficultyPoint = new DifficultyPoint();
+  static readonly DEFAULT = new DifficultyPoint();
 
   /**
    * The default instance of a difficulty point.
@@ -23,7 +23,7 @@ export class DifficultyPoint extends ControlPoint {
   /**
    * The type of a difficulty point.
    */
-  pointType: ControlPointType = ControlPointType.DifficultyPoint;
+  pointType = ControlPointType.DifficultyPoint;
 
   /**
    * Whether or not slider ticks should be generated at this control point.
