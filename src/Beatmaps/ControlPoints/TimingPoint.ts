@@ -58,12 +58,16 @@ export class TimingPoint extends ControlPoint {
     return false;
   }
 
-  /**
-   * @param other Other timing control point.
-   * @returns If two timing control points are equal.
-   */
+  copyFrom(other: TimingPoint): void {
+    super.copyFrom(other);
+
+    this.timeSignature = other.timeSignature;
+    this.beatLength = other.beatLength;
+  }
+
   equals(other: TimingPoint): boolean {
-    return other instanceof TimingPoint
+    return super.equals(other)
+      && other instanceof TimingPoint
       && this.timeSignature === other.timeSignature
       && this.beatLength === other.beatLength;
   }

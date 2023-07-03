@@ -63,14 +63,18 @@ export class EffectPoint extends ControlPoint {
     );
   }
 
-  /**
-   * @param other Other effect control point.
-   * @returns If two effect control points are equal.
-   */
+  copyFrom(other: EffectPoint): void {
+    super.copyFrom(other);
+
+    this.kiai = other.kiai;
+    this.scrollSpeed = other.scrollSpeed;
+    this.omitFirstBarLine = other.omitFirstBarLine;
+  }
+
   equals(other: EffectPoint): boolean {
-    return other instanceof EffectPoint
+    return super.equals(other)
+      && other instanceof EffectPoint
       && this.kiai === other.kiai
-      && this.omitFirstBarLine === other.omitFirstBarLine
       && this.scrollSpeed === other.scrollSpeed;
   }
 }

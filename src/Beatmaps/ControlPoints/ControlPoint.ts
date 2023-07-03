@@ -48,15 +48,26 @@ export abstract class ControlPoint {
   }
 
   /**
-   * The time at which control point starts.
+   * Copies properties from other control point.
+   * @param other Other difficulty control point.
    */
-  get startTime(): number {
-    if (this.group) {
-      return (this.group as ControlPointGroup).startTime;
-    }
-
-    return 0;
+  copyFrom(other: ControlPoint): void {
+    this.startTime = other.startTime;
   }
 
+  /**
+   * @param other Other difficulty control point.
+   * @returns If two control points are equal.
+   */
+  equals(other: ControlPoint): boolean {
+    return other instanceof ControlPoint && this.startTime === other.startTime;
+  }
+
+  /**
+   * Determines whether this {@link ControlPoint} results 
+   * in a meaningful change when placed alongside another.
+   * @param existing An existing control point to compare with.
+   * @returns Whether this {@link ControlPoint} is redundant when placed alongside existing one.
+   */
   abstract isRedundant(existing: ControlPoint | null): boolean;
 }
