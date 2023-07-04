@@ -1,8 +1,8 @@
 import { IHitObject } from './IHitObject';
-import { IHasLegacyLastTickOffset } from './Types/IHasLegacyLastTickOffset';
-import { IHasPathWithRepeats } from './Types/IHasPathWithRepeats';
+import { IHasPath } from './Types/IHasPath';
+import { IHasSliderVelocity } from './Types/IHasSliderVelocity';
 
-export interface ISlidableObject extends IHasPathWithRepeats, IHitObject, IHasLegacyLastTickOffset {
+export interface ISlidableObject extends IHitObject, IHasPath, IHasSliderVelocity {
   /**
    * Spacing between ticks of a slidable object.
    */
