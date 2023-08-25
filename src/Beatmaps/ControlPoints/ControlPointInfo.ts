@@ -77,7 +77,7 @@ export class ControlPointInfo {
    */
   difficultyPointAt(time: number, l?: number, r?: number): DifficultyPoint {
     const point = BinarySearch.findControlPoint(this.difficultyPoints, time, l, r);
-    const fallback = DifficultyPoint.default;
+    const fallback = DifficultyPoint.DEFAULT;
 
     return (point as DifficultyPoint) || fallback;
   }
@@ -91,7 +91,7 @@ export class ControlPointInfo {
    */
   effectPointAt(time: number, l?: number, r?: number): EffectPoint {
     const point = BinarySearch.findControlPoint(this.effectPoints, time, l, r);
-    const fallback = EffectPoint.default;
+    const fallback = EffectPoint.DEFAULT;
 
     return (point as EffectPoint) || fallback;
   }
@@ -105,7 +105,7 @@ export class ControlPointInfo {
    */
   samplePointAt(time: number, l?: number, r?: number): SamplePoint {
     const point = BinarySearch.findControlPoint(this.samplePoints, time, l, r);
-    const fallback = SamplePoint.default;
+    const fallback = this.samplePoints[0] || SamplePoint.DEFAULT;
 
     return (point as SamplePoint) || fallback;
   }
@@ -119,7 +119,7 @@ export class ControlPointInfo {
    */
   timingPointAt(time: number, l?: number, r?: number): TimingPoint {
     const point = BinarySearch.findControlPoint(this.timingPoints, time, l, r);
-    const fallback = this.timingPoints[0] || TimingPoint.default;
+    const fallback = this.timingPoints[0] || TimingPoint.DEFAULT;
 
     return (point as TimingPoint) || fallback;
   }
