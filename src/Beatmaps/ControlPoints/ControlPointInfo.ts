@@ -71,10 +71,12 @@ export class ControlPointInfo {
   /**
    * Finds a difficulty point at the specified time.
    * @param time The time.
+   * @param l Left boundary for binary search.
+   * @param r Right boundary for binary search.
    * @returns A difficulty point at the specified time.
    */
-  difficultyPointAt(time: number): DifficultyPoint {
-    const point = BinarySearch.findControlPoint(this.difficultyPoints, time);
+  difficultyPointAt(time: number, l?: number, r?: number): DifficultyPoint {
+    const point = BinarySearch.findControlPoint(this.difficultyPoints, time, l, r);
     const fallback = DifficultyPoint.default;
 
     return (point as DifficultyPoint) || fallback;
@@ -83,10 +85,12 @@ export class ControlPointInfo {
   /**
    * Finds a effect point at the specified time.
    * @param time The time.
+   * @param l Left boundary for binary search.
+   * @param r Right boundary for binary search.
    * @returns A effect point at the specified time.
    */
-  effectPointAt(time: number): EffectPoint {
-    const point = BinarySearch.findControlPoint(this.effectPoints, time);
+  effectPointAt(time: number, l?: number, r?: number): EffectPoint {
+    const point = BinarySearch.findControlPoint(this.effectPoints, time, l, r);
     const fallback = EffectPoint.default;
 
     return (point as EffectPoint) || fallback;
@@ -95,10 +99,12 @@ export class ControlPointInfo {
   /**
    * Finds a sample point at the specified time.
    * @param time The time.
+   * @param l Left boundary for binary search.
+   * @param r Right boundary for binary search.
    * @returns A sample point at the specified time.
    */
-  samplePointAt(time: number): SamplePoint {
-    const point = BinarySearch.findControlPoint(this.samplePoints, time);
+  samplePointAt(time: number, l?: number, r?: number): SamplePoint {
+    const point = BinarySearch.findControlPoint(this.samplePoints, time, l, r);
     const fallback = SamplePoint.default;
 
     return (point as SamplePoint) || fallback;
@@ -107,10 +113,12 @@ export class ControlPointInfo {
   /**
    * Finds a timing point at the specified time.
    * @param time The time.
+   * @param l Left boundary for binary search.
+   * @param r Right boundary for binary search.
    * @returns A timing point at the specified time.
    */
-  timingPointAt(time: number): TimingPoint {
-    const point = BinarySearch.findControlPoint(this.timingPoints, time);
+  timingPointAt(time: number, l?: number, r?: number): TimingPoint {
+    const point = BinarySearch.findControlPoint(this.timingPoints, time, l, r);
     const fallback = this.timingPoints[0] || TimingPoint.default;
 
     return (point as TimingPoint) || fallback;
