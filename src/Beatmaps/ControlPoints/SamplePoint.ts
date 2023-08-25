@@ -102,7 +102,7 @@ export class SamplePoint extends ControlPoint {
    * @param existing The another sample point.
    * @returns Whether the sample point is redundant.
    */
-  isRedundant(existing: SamplePoint): boolean {
+  isRedundant(existing: SamplePoint | null): boolean {
     return existing instanceof SamplePoint
       && this.bank === existing.bank
       && this.volume === existing.volume
