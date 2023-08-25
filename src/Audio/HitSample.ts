@@ -43,6 +43,12 @@ export class HitSample {
   bank: string;
 
   /**
+   * Whether a bank was specified locally to the relevant hitobject.
+   * If `false`, a bank will be retrieved from the closest control point.
+   */
+  bankSpecified = false;
+
+  /**
    * Custom sample bank index.
    */
   customBankIndex: number;
@@ -79,14 +85,21 @@ export class HitSample {
 
   /**
    * Hit sound data.
+   * Use {@link name} instead.
    * @deprecated Since 3.1.0
    */
   hitSound: string;
 
   constructor(options?: Partial<HitSample>) {
     this.name = options?.name ?? '';
-    this.bank = options?.bank ?? options?.sampleSet ?? '';
-    this.customBankIndex = options?.customBankIndex ?? options?.customIndex ?? 0;
+    this.bank = options?.bank ?? HitSample.BANK_NORMAL;
+    this.bankSpecified = typeof options?.bank === 'string'
+      && options.bank.length > 0;
+
+    this.customBankIndex = options?.customBankIndex
+      ?? options?.customIndex
+      ?? 0;
+
     this.suffix = options?.suffix ?? '';
 
     if (this.customBankIndex >= 2) {
