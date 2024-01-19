@@ -53,17 +53,19 @@ export class ControlPointInfo {
    * @returns A group at the specified time.
    */
   groupAt(time: number): ControlPointGroup {
-    let group = this.groups.find((g) => g.startTime === time);
+    let groupIndex = BinarySearch.findIndex(this.groups, (g) => g.startTime === time);
 
-    if (!group) {
-      group = new ControlPointGroup(time);
-
-      group.onItemAdd = this.onGroupItemAdded;
-      group.onItemRemove = this.onGroupItemRemoved;
-
-      this.groups.push(group);
-      this.groups.sort((a, b) => a.startTime - b.startTime);
+    if (groupIndex >= 0) {
+      return this.groups[groupIndex];
     }
+
+    const group = new ControlPointGroup(time);
+
+    group.onItemAdd = this.onGroupItemAdded;
+    group.onItemRemove = this.onGroupItemRemoved;
+
+    this.groups.push(group);
+    this.groups.sort((a, b) => a.startTime - b.startTime);
 
     return group;
   }
@@ -71,12 +73,10 @@ export class ControlPointInfo {
   /**
    * Finds a difficulty point at the specified time.
    * @param time The time.
-   * @param l Left boundary for binary search.
-   * @param r Right boundary for binary search.
    * @returns A difficulty point at the specified time.
    */
-  difficultyPointAt(time: number, l?: number, r?: number): DifficultyPoint {
-    const point = BinarySearch.findControlPoint(this.difficultyPoints, time, l, r);
+  difficultyPointAt(time: number): DifficultyPoint {
+    const point = BinarySearch.findControlPoint(this.difficultyPoints, time);
     const fallback = DifficultyPoint.DEFAULT;
 
     return (point as DifficultyPoint) || fallback;
@@ -85,12 +85,10 @@ export class ControlPointInfo {
   /**
    * Finds a effect point at the specified time.
    * @param time The time.
-   * @param l Left boundary for binary search.
-   * @param r Right boundary for binary search.
    * @returns A effect point at the specified time.
    */
-  effectPointAt(time: number, l?: number, r?: number): EffectPoint {
-    const point = BinarySearch.findControlPoint(this.effectPoints, time, l, r);
+  effectPointAt(time: number): EffectPoint {
+    const point = BinarySearch.findControlPoint(this.effectPoints, time);
     const fallback = EffectPoint.DEFAULT;
 
     return (point as EffectPoint) || fallback;
@@ -99,12 +97,10 @@ export class ControlPointInfo {
   /**
    * Finds a sample point at the specified time.
    * @param time The time.
-   * @param l Left boundary for binary search.
-   * @param r Right boundary for binary search.
    * @returns A sample point at the specified time.
    */
-  samplePointAt(time: number, l?: number, r?: number): SamplePoint {
-    const point = BinarySearch.findControlPoint(this.samplePoints, time, l, r);
+  samplePointAt(time: number): SamplePoint {
+    const point = BinarySearch.findControlPoint(this.samplePoints, time);
     const fallback = this.samplePoints[0] || SamplePoint.DEFAULT;
 
     return (point as SamplePoint) || fallback;
@@ -113,12 +109,10 @@ export class ControlPointInfo {
   /**
    * Finds a timing point at the specified time.
    * @param time The time.
-   * @param l Left boundary for binary search.
-   * @param r Right boundary for binary search.
    * @returns A timing point at the specified time.
    */
-  timingPointAt(time: number, l?: number, r?: number): TimingPoint {
-    const point = BinarySearch.findControlPoint(this.timingPoints, time, l, r);
+  timingPointAt(time: number): TimingPoint {
+    const point = BinarySearch.findControlPoint(this.timingPoints, time);
     const fallback = this.timingPoints[0] || TimingPoint.DEFAULT;
 
     return (point as TimingPoint) || fallback;
@@ -135,50 +129,40 @@ export class ControlPointInfo {
       return false;
     }
 
-    const list = this.getCurrentList(point);
-    const index = BinarySearch.findControlPointIndex(list, time);
-
-    /**
-     * We need to imitate C# sorted list here.
-     * Since we already have binary search function for control points,
-     * we can just insert new elements via splice by found index.
-     */
-    list.splice(index + 1, 0, point);
-
     this.groupAt(time).add(point);
 
     return true;
   }
 
   getCurrentList(newPoint: ControlPoint): ControlPoint[] {
-    switch (newPoint.pointType) {
-      case ControlPointType.DifficultyPoint: return this.difficultyPoints;
-      case ControlPointType.EffectPoint: return this.effectPoints;
-      case ControlPointType.SamplePoint: return this.samplePoints;
-      case ControlPointType.TimingPoint: return this.timingPoints;
+    if (newPoint instanceof DifficultyPoint) {
+      return this.difficultyPoints;
     }
 
-    throw new TypeError(`Unknown control point type: ${newPoint.pointType}!`);
+    if (newPoint instanceof EffectPoint) {
+      return this.effectPoints;
+    }
+
+    if (newPoint instanceof SamplePoint) {
+      return this.samplePoints;
+    }
+
+    if (newPoint instanceof TimingPoint) {
+      return this.timingPoints;
+    }
+
+    throw new TypeError(`Unknown control point type: ${newPoint}!`);
   }
 
   checkAlreadyExisting(time: number, newPoint: ControlPoint): boolean {
     let existing = null;
 
-    switch (newPoint.pointType) {
-      case ControlPointType.DifficultyPoint:
-        existing = this.difficultyPointAt(time);
-        break;
-
-      case ControlPointType.EffectPoint:
-        existing = this.effectPointAt(time);
-        break;
-
-      case ControlPointType.SamplePoint:
-        existing = BinarySearch.findControlPoint(this.samplePoints, time);
-        break;
-
-      case ControlPointType.TimingPoint:
-        existing = BinarySearch.findControlPoint(this.timingPoints, time);
+    if (newPoint instanceof EffectPoint) {
+      existing = this.effectPointAt(time);
+    }
+    
+    if (newPoint instanceof TimingPoint) {
+      existing = BinarySearch.findControlPoint(this.timingPoints, time);
     }
 
     return newPoint?.isRedundant(existing);
@@ -191,35 +175,6 @@ export class ControlPointInfo {
    * @returns Whether the control point has been removed from the group.
    */
   remove(point: ControlPoint, time: number): boolean {
-    let list: ControlPoint[];
-
-    switch (point.pointType) {
-      case ControlPointType.DifficultyPoint:
-        list = this.difficultyPoints;
-        break;
-
-      case ControlPointType.EffectPoint:
-        list = this.effectPoints;
-        break;
-
-      case ControlPointType.SamplePoint:
-        list = this.samplePoints;
-        break;
-
-      default:
-        list = this.timingPoints;
-    }
-
-    const index = list.findIndex((p) => {
-      return p.startTime === point.startTime;
-    });
-
-    if (index === -1) {
-      return false;
-    }
-
-    list.splice(index, 1);
-
     this.groupAt(time).remove(point);
 
     return true;
@@ -235,7 +190,7 @@ export class ControlPointInfo {
     group.onItemAdd = null;
     group.onItemRemove = null;
 
-    const groupIndex = this.groups.findIndex((g) => g === group);
+    const groupIndex = BinarySearch.findIndex(this.groups, (g) => g === group);
 
     if (groupIndex >= 0) {
       this.groups.splice(groupIndex, 1);
@@ -243,15 +198,31 @@ export class ControlPointInfo {
   }
 
   onGroupItemAdded(controlPoint: ControlPoint): void {
-    this.getCurrentList(controlPoint).push(controlPoint);
+    const list = this.getCurrentList(controlPoint);
+    const itemIndex = BinarySearch.findControlPointIndex(
+      list, 
+      controlPoint.startTime
+    );
+
+    /**
+     * We need to imitate C# sorted list here.
+     * Since we already have binary search function for control points,
+     * we can just insert new elements via splice by found index.
+     */
+    list.splice(itemIndex + 1, 0, controlPoint);
   }
 
   onGroupItemRemoved(controlPoint: ControlPoint): void {
     const list = this.getCurrentList(controlPoint);
 
-    const itemIndex = list.findIndex((c) => c === controlPoint);
+    const itemIndex = BinarySearch.findIndex(
+      list, 
+      (c) => c === controlPoint
+    );
 
-    if (itemIndex !== -1) list.splice(itemIndex, 1);
+    if (itemIndex >= 0) {
+      list.splice(itemIndex, 1);
+    }
   }
 
   /**
