@@ -5,6 +5,10 @@ import { ControlPointType } from '../Enums/ControlPointType';
  * A control point of a beatmap.
  */
 export abstract class ControlPoint {
+  /**
+   * Use `instanceof` operator to check control point type.
+   * @deprecated
+   */
   abstract pointType: ControlPointType;
 
   /**

@@ -25,9 +25,6 @@ export class SamplePoint extends ControlPoint {
     return SamplePoint.DEFAULT;
   }
 
-  /**
-   * The type of a sample point.
-   */
   pointType = ControlPointType.SamplePoint;
 
   /**

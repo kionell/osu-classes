@@ -27,9 +27,6 @@ export class TimingPoint extends ControlPoint {
     return TimingPoint.DEFAULT;
   }
 
-  /**
-   * The type of a timing point.
-   */
   pointType = ControlPointType.TimingPoint;
 
   /**

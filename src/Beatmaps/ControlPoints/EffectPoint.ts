@@ -20,9 +20,6 @@ export class EffectPoint extends ControlPoint {
     return EffectPoint.DEFAULT;
   }
 
-  /**
-   * The type of an effect point.
-   */
   pointType = ControlPointType.EffectPoint;
 
   /**

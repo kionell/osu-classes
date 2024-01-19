@@ -20,9 +20,6 @@ export class DifficultyPoint extends ControlPoint {
     return DifficultyPoint.DEFAULT;
   }
 
-  /**
-   * The type of a difficulty point.
-   */
   pointType = ControlPointType.DifficultyPoint;
 
   /**
