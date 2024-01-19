@@ -32,6 +32,8 @@ export abstract class HitObject implements IHitObject {
 
   /**
    * Parsed hit sound data of a hit object.
+   * Use {@link samples} to work with hitsound data.
+   * @deprecated
    */
   hitSound: HitSound = HitSound.Normal;
 
