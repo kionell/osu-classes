@@ -79,14 +79,14 @@ export class HitSample {
   /**
    * The bank to load the sample from.
    * Use {@link bank} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   sampleSet: string;
 
   /**
    * Hit sound data.
    * Use {@link name} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   hitSound: string;
 
@@ -118,14 +118,14 @@ export class HitSample {
   /**
    * Custom index of hit sample.
    * Use {@link customBankIndex} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   get customIndex(): number {
     return this.customBankIndex;
   }
 
   /**
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   set customIndex(value: number) {
     this.customBankIndex = value;

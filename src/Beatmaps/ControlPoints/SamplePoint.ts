@@ -19,7 +19,7 @@ export class SamplePoint extends ControlPoint {
   /**
    * The default instance of a sample point.
    * Use {@link DEFAULT} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   static get default(): SamplePoint {
     return SamplePoint.DEFAULT;
@@ -48,14 +48,14 @@ export class SamplePoint extends ControlPoint {
 
   /**
    * The custom index of this sample point.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   get customIndex(): number {
     return this.customBankIndex;
   }
 
   /**
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   set customIndex(value: number) {
     this.customBankIndex = value;
@@ -64,7 +64,7 @@ export class SamplePoint extends ControlPoint {
   /**
    * The sample bank of this sample point.
    * Use {@link sampleBank} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   sampleSet: string = SampleSet[SampleSet.Normal];
 

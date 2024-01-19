@@ -14,7 +14,7 @@ export class EffectPoint extends ControlPoint {
   /**
    * The default instance of an effect point.
    * Use {@link DEFAULT} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   static get default(): EffectPoint {
     return EffectPoint.DEFAULT;
@@ -33,7 +33,7 @@ export class EffectPoint extends ControlPoint {
   /**
    * Whether the first bar line of this control point is ignored.
    * This property was moved to timing points.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   omitFirstBarLine = false;
 

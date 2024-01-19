@@ -14,7 +14,7 @@ export class DifficultyPoint extends ControlPoint {
   /**
    * The default instance of a difficulty point.
    * Use {@link DEFAULT} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   static get default(): DifficultyPoint {
     return DifficultyPoint.DEFAULT;

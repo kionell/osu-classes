@@ -10,7 +10,7 @@ export abstract class ControlPoint {
   /**
    * The group to which a control point belongs.
    * Use control point info to get access to the groups
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   group: ControlPointGroup | null;
 
@@ -41,7 +41,7 @@ export abstract class ControlPoint {
   /**
    * Dettaches a group from this control point.
    * Remove control points directrly from the group.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   dettachGroup(): void {
     this.group = null;

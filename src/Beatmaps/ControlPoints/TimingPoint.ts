@@ -21,7 +21,7 @@ export class TimingPoint extends ControlPoint {
   /**
    * The default instance of a timing point.
    * Use {@link DEFAULT} instead.
-   * @deprecated Since 3.1.0
+   * @deprecated
    */
   static get default(): TimingPoint {
     return TimingPoint.DEFAULT;
