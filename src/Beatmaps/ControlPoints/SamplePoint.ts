@@ -76,7 +76,6 @@ export class SamplePoint extends ControlPoint {
       name: sampleName,
       bank: this.bank,
       volume: this.volume,
-      customBankIndex: this.customBankIndex,
     });
   }
 
@@ -87,7 +86,7 @@ export class SamplePoint extends ControlPoint {
    */
   applyTo(hitSample: HitSample): HitSample {
     return hitSample.with({
-      bank: hitSample.bank || this.bank,
+      bank: hitSample.bankSpecified ? hitSample.bank : this.bank,
       volume: hitSample.volume > 0 ? hitSample.volume : this.volume,
       customSampleBank: hitSample.customSampleBank > 0
         ? hitSample.customSampleBank

@@ -117,9 +117,13 @@ export class HitSample {
 
   constructor(options?: Partial<HitSample>) {
     this.name = options?.name ?? '';
-    this.bank = options?.bank ?? HitSample.BANK_NORMAL;
     this.bankSpecified = typeof options?.bank === 'string'
-      && options.bank.length > 0;
+      && options.bank.length > 0
+      && options.bank !== 'none';
+
+    this.bank = this.bankSpecified
+      ? options?.bank as string
+      : HitSample.BANK_NORMAL;
 
     this.customSampleBank = options?.customSampleBank ?? 0;
     this.suffix = options?.suffix ?? '';
