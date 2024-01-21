@@ -159,10 +159,18 @@ export class ControlPointInfo {
   checkAlreadyExisting(time: number, newPoint: ControlPoint): boolean {
     let existing = null;
 
+    if (newPoint instanceof DifficultyPoint) {
+      existing = this.difficultyPointAt(time);
+    }
+
     if (newPoint instanceof EffectPoint) {
       existing = this.effectPointAt(time);
     }
-    
+
+    if (newPoint instanceof SamplePoint) {
+      existing = BinarySearch.findControlPoint(this.samplePoints, time);
+    }
+
     if (newPoint instanceof TimingPoint) {
       existing = BinarySearch.findControlPoint(this.timingPoints, time);
     }
