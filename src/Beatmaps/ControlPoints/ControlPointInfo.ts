@@ -192,7 +192,7 @@ export class ControlPointInfo {
     group.onItemAdd = null;
     group.onItemRemove = null;
 
-    const groupIndex = BinarySearch.findIndex(this.groups, (g) => g === group);
+    const groupIndex = this.groups.findIndex((g) => g.equals(group));
 
     if (groupIndex >= 0) {
       this.groups.splice(groupIndex, 1);
@@ -215,10 +215,7 @@ export class ControlPointInfo {
   onGroupItemRemoved(controlPoint: ControlPoint): void {
     const list = this.getCurrentList(controlPoint);
 
-    const itemIndex = BinarySearch.findIndex(
-      list, 
-      (c) => c === controlPoint
-    );
+    const itemIndex = list.findIndex((c) => c.equals(controlPoint));
 
     if (itemIndex >= 0) {
       list.splice(itemIndex, 1);
@@ -245,7 +242,6 @@ export class ControlPointInfo {
     const cloned = new ControlPointInfo();
 
     cloned.groups = this.groups;
-
     cloned.difficultyPoints = this.difficultyPoints;
     cloned.effectPoints = this.effectPoints;
     cloned.samplePoints = this.samplePoints;
