@@ -176,6 +176,8 @@ export class HitSample {
     return other instanceof HitSample
       && this.name === other.name
       && this.bank === other.bank
-      && this.suffix === other.suffix;
+      && this.suffix === other.suffix
+      && this.customSampleBank === other.customSampleBank
+      && this.isLayered === other.isLayered;
   }
 }
