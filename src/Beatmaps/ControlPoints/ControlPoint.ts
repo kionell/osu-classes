@@ -53,14 +53,14 @@ export abstract class ControlPoint {
 
   /**
    * Copies properties from other control point.
-   * @param other Other difficulty control point.
+   * @param other Other control point.
    */
   copyFrom(other: ControlPoint): void {
     this.startTime = other.startTime;
   }
 
   /**
-   * @param other Other difficulty control point.
+   * @param other Other control point.
    * @returns If two control points are equal.
    */
   equals(other: ControlPoint): boolean {
