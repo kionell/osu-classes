@@ -6,7 +6,7 @@ import { ControlPointType } from '../Enums/ControlPointType';
  */
 export abstract class ControlPoint {
   /**
-   * Use `instanceof` operator to check control point type.
+   * Use {@link getType} to check control point type.
    * @deprecated
    */
   abstract pointType: ControlPointType;
@@ -64,8 +64,13 @@ export abstract class ControlPoint {
    * @returns If two control points are equal.
    */
   equals(other: ControlPoint): boolean {
-    return other instanceof ControlPoint && this.startTime === other.startTime;
+    return this.startTime === other.startTime;
   }
+
+  /**
+   * @returns The type of this control point.
+   */
+  getType = (): typeof ControlPoint => ControlPoint;
 
   /**
    * Determines whether this {@link ControlPoint} results 

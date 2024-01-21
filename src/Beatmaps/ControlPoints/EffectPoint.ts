@@ -72,4 +72,6 @@ export class EffectPoint extends ControlPoint {
       && this.kiai === other.kiai
       && this.scrollSpeed === other.scrollSpeed;
   }
+
+  getType = (): typeof EffectPoint => EffectPoint;
 }

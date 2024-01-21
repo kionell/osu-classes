@@ -18,6 +18,8 @@ export interface IHitObject {
 
   /**
    * Hit sound data of this hit object.
+   * Use {@link samples} to work with hitsound data.
+   * @deprecated
    */
   hitSound: HitSound;
 

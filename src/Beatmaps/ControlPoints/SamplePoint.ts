@@ -41,21 +41,22 @@ export class SamplePoint extends ControlPoint {
    * The index of the custom sample bank. Is only used if 2 or above for "reasons".
    * This will add a suffix to lookups, allowing extended bank lookups (ie. "normal-hitnormal-2").
    */
-  customBankIndex = 0;
+  customSampleBank = 0;
 
   /**
    * The custom index of this sample point.
+   * Use {@link customSampleBank} instead.
    * @deprecated
    */
   get customIndex(): number {
-    return this.customBankIndex;
+    return this.customSampleBank;
   }
 
   /**
    * @deprecated
    */
   set customIndex(value: number) {
-    this.customBankIndex = value;
+    this.customSampleBank = value;
   }
 
   /**
@@ -88,9 +89,9 @@ export class SamplePoint extends ControlPoint {
     return hitSample.with({
       bank: hitSample.bank || this.bank,
       volume: hitSample.volume > 0 ? hitSample.volume : this.volume,
-      customBankIndex: hitSample.customBankIndex > 0
-        ? hitSample.customBankIndex
-        : this.customBankIndex,
+      customSampleBank: hitSample.customSampleBank > 0
+        ? hitSample.customSampleBank
+        : this.customSampleBank,
     });
   }
 
@@ -103,7 +104,7 @@ export class SamplePoint extends ControlPoint {
     return existing instanceof SamplePoint
       && this.bank === existing.bank
       && this.volume === existing.volume
-      && this.customBankIndex === existing.customBankIndex;
+      && this.customSampleBank === existing.customSampleBank;
   }
 
   copyFrom(other: SamplePoint): void {
@@ -111,7 +112,7 @@ export class SamplePoint extends ControlPoint {
 
     this.bank = other.bank;
     this.volume = other.volume;
-    this.customBankIndex = other.customBankIndex;
+    this.customSampleBank = other.customSampleBank;
   }
 
   equals(other: SamplePoint): boolean {
@@ -119,6 +120,8 @@ export class SamplePoint extends ControlPoint {
       && other instanceof SamplePoint
       && this.bank === other.bank
       && this.volume === other.volume
-      && this.customBankIndex === other.customBankIndex;
+      && this.customSampleBank === other.customSampleBank;
   }
+
+  getType = (): typeof SamplePoint => SamplePoint;
 }

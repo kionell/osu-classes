@@ -77,4 +77,6 @@ export class DifficultyPoint extends ControlPoint {
       && other instanceof DifficultyPoint
       && this.sliderVelocity === other.sliderVelocity;
   }
+
+  getType = (): typeof DifficultyPoint => DifficultyPoint;
 }

@@ -29,7 +29,7 @@ export class ControlPointGroup {
    */
   add(point: ControlPoint): void {
     const existing = this.controlPoints.find((p) => {
-      return p.pointType === point.pointType;
+      return p.getType() === point.getType();
     });
 
     if (existing) {
@@ -49,7 +49,7 @@ export class ControlPointGroup {
    */
   remove(point: ControlPoint): void {
     const index = this.controlPoints.findIndex((p) => {
-      return p.pointType === point.pointType;
+      return p.getType() === point.getType();
     });
 
     if (index !== -1) {

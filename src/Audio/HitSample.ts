@@ -43,17 +43,6 @@ export class HitSample {
   bank: string;
 
   /**
-   * Whether a bank was specified locally to the relevant hitobject.
-   * If `false`, a bank will be retrieved from the closest control point.
-   */
-  bankSpecified = false;
-
-  /**
-   * Custom sample bank index.
-   */
-  customBankIndex: number;
-
-  /**
    * An optional suffix to provide priority lookup.
    * Falls back to non-suffixed name.
    */
@@ -63,6 +52,17 @@ export class HitSample {
    * The sample volume.
    */
   volume: number;
+
+  /**
+   * Whether a bank was specified locally to the relevant hitobject.
+   * If `false`, a bank will be retrieved from the closest control point.
+   */
+  bankSpecified = false;
+
+  /**
+   * Custom sample bank index.
+   */
+  customSampleBank: number;
 
   /**
    * Whether this hit sample is layered.
@@ -81,14 +81,32 @@ export class HitSample {
    * Use {@link bank} instead.
    * @deprecated
    */
-  sampleSet: string;
+  get sampleSet(): string {
+    return this.bank;
+  }
+
+  /**
+   * @deprecated
+   */
+  set sampleSet(value: string) {
+    this.bank = value;
+  }
 
   /**
    * Hit sound data.
    * Use {@link name} instead.
    * @deprecated
    */
-  hitSound: string;
+  get hitSound(): string {
+    return this.name;
+  }
+
+  /**
+   * @deprecated
+   */
+  set hitSound(value: string) {
+    this.name = value;
+  }
 
   constructor(options?: Partial<HitSample>) {
     this.name = options?.name ?? '';
@@ -96,39 +114,32 @@ export class HitSample {
     this.bankSpecified = typeof options?.bank === 'string'
       && options.bank.length > 0;
 
-    this.customBankIndex = options?.customBankIndex
-      ?? options?.customIndex
-      ?? 0;
-
+    this.customSampleBank = options?.customSampleBank ?? 0;
     this.suffix = options?.suffix ?? '';
 
-    if (this.customBankIndex >= 2) {
-      this.suffix = this.customBankIndex.toString();
+    if (this.customSampleBank >= 2) {
+      this.suffix = this.customSampleBank.toString();
     }
 
     this.volume = options?.volume ?? 100;
     this.isLayered = options?.isLayered ?? false;
     this.filename = options?.filename ?? '';
-
-    // TODO: Remove deprecated stuff.
-    this.sampleSet = options?.sampleSet ?? SampleSet[SampleSet.None];
-    this.hitSound = options?.hitSound ?? HitSound[HitSound.Normal];
   }
 
   /**
    * Custom index of hit sample.
-   * Use {@link customBankIndex} instead.
+   * Use {@link customSampleBank} instead.
    * @deprecated
    */
   get customIndex(): number {
-    return this.customBankIndex;
+    return this.customSampleBank;
   }
 
   /**
    * @deprecated
    */
   set customIndex(value: number) {
-    this.customBankIndex = value;
+    this.customSampleBank = value;
   }
 
   /**
@@ -142,7 +153,7 @@ export class HitSample {
       bank: this.bank,
       suffix: this.suffix,
       volume: this.volume,
-      customBankIndex: this.customBankIndex,
+      customSampleBank: this.customSampleBank,
       isLayered: this.isLayered,
       ...options,
     });

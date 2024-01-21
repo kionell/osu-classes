@@ -81,4 +81,6 @@ export class TimingPoint extends ControlPoint {
       && this.omitFirstBarLine === other.omitFirstBarLine
       && this.beatLength === other.beatLength;
   }
+
+  getType = (): typeof TimingPoint => TimingPoint;
 }
