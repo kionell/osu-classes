@@ -1,5 +1,4 @@
 import { BinarySearch } from '../../Utils';
-import { ControlPointType } from '../Enums/ControlPointType';
 import { ControlPointGroup } from './ControlPointGroup';
 import { ControlPoint } from './ControlPoint';
 import { DifficultyPoint } from './DifficultyPoint';
@@ -64,8 +63,8 @@ export class ControlPointInfo {
 
     const group = new ControlPointGroup(time);
 
-    group.onItemAdd = this.onGroupItemAdded;
-    group.onItemRemove = this.onGroupItemRemoved;
+    group.onItemAdd = this.onGroupItemAdded.bind(this);
+    group.onItemRemove = this.onGroupItemRemoved.bind(this);
 
     this.groups.splice(~groupIndex, 0, group);
 
