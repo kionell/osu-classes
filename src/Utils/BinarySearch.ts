@@ -78,7 +78,7 @@ export function findControlPointIndex(arr: ControlPoint[], time: number): number
  * @param time The time to search for.
  * @returns Found control point.
  */
-export function findControlPoint(arr: ControlPoint[], time: number): ControlPoint | null {
+export function findControlPoint<T extends ControlPoint>(arr: T[], time: number): T | null {
   const index = findControlPointIndex(arr, time);
 
   if (index === -1) return null;
