@@ -1,6 +1,3 @@
-import { HitSound } from './Enums/HitSound';
-import { SampleSet } from './Enums/SampleSet';
-
 /**
  * Describes a gameplay hit sample.
  */
@@ -13,6 +10,16 @@ export class HitSample {
   static readonly BANK_NORMAL = 'normal';
   static readonly BANK_SOFT = 'soft';
   static readonly BANK_DRUM = 'drum';
+
+  /**
+   * New sample used exclusively by taiko for now.
+   */
+  static readonly HIT_FLOURISH = 'hitflourish';
+
+  /**
+   * New bank used exclusively by taiko for now.
+   */
+  static readonly BANK_STRONG = 'strong';
 
   /**
    * All valid sample addition constants.
