@@ -13,7 +13,7 @@ export class SampleBank {
    * Hit sample volume (0-100).
    * See {@link HitSample.volume}.
    */
-  volume = 100;
+  volume = 0;
 
   /**
    * The bank identifier to use for the base ("hitnormal") sample.
