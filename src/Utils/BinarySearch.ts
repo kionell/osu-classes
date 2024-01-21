@@ -1,6 +1,7 @@
 import { ControlPoint } from '../Beatmaps/ControlPoints/ControlPoint';
 
 export type BinarySearchPredicate<T> = (value: T, index: number, arr: T[]) => boolean;
+export type BinarySearchComparer<T> = (value: T, index: number, arr: T[]) => number;
 
 /**
  * Searches an entire one-dimensional sorted array for a specific value.
@@ -103,4 +104,33 @@ export function findIndex<T>(arr: T[], predicate: BinarySearchPredicate<T>): num
   }
 
   return r;
+}
+
+/**
+ * Searches for an index of a value by comparer function. 
+ * @param arr The list of any values.
+ * @param comparer Comparer function.
+ * @returns Positive result means that the value was found.
+ * Bitwise complement of negative result is the correct index for insertion.
+ */
+export function findInsertionIndex<T>(arr: T[], comparer: BinarySearchComparer<T>): number {
+  let l = 0;
+  let r = arr.length - 1;
+
+  while (l <= r) {
+    const mid = (l + r) >>> 1;
+    const cmp = comparer(arr[mid], mid, arr);
+
+    if (cmp < 0) {
+      l = mid + 1;
+    }
+    else if (cmp > 0) {
+      r = mid - 1;
+    }
+    else {
+      return mid;
+    }
+  }
+
+  return ~l;
 }

@@ -53,7 +53,10 @@ export class ControlPointInfo {
    * @returns A group at the specified time.
    */
   groupAt(time: number): ControlPointGroup {
-    let groupIndex = BinarySearch.findIndex(this.groups, (g) => g.startTime === time);
+    const groupIndex = BinarySearch.findInsertionIndex(
+      this.groups,
+      (g) => g.startTime - time,
+    );
 
     if (groupIndex >= 0) {
       return this.groups[groupIndex];
@@ -64,8 +67,7 @@ export class ControlPointInfo {
     group.onItemAdd = this.onGroupItemAdded;
     group.onItemRemove = this.onGroupItemRemoved;
 
-    this.groups.push(group);
-    this.groups.sort((a, b) => a.startTime - b.startTime);
+    this.groups.splice(~groupIndex, 0, group);
 
     return group;
   }
@@ -199,17 +201,15 @@ export class ControlPointInfo {
 
   onGroupItemAdded(controlPoint: ControlPoint): void {
     const list = this.getCurrentList(controlPoint);
-    const itemIndex = BinarySearch.findControlPointIndex(
-      list, 
-      controlPoint.startTime
+
+    const itemIndex = BinarySearch.findInsertionIndex(
+      list,
+      (c) => c.startTime - controlPoint.startTime,
     );
 
-    /**
-     * We need to imitate C# sorted list here.
-     * Since we already have binary search function for control points,
-     * we can just insert new elements via splice by found index.
-     */
-    list.splice(itemIndex + 1, 0, controlPoint);
+    if (itemIndex >= 0) return;
+
+    list.splice(~itemIndex, 0, controlPoint);
   }
 
   onGroupItemRemoved(controlPoint: ControlPoint): void {
