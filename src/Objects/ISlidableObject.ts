@@ -1,8 +1,15 @@
 import { IHitObject } from './IHitObject';
-import { IHasPath } from './Types/IHasPath';
-import { IHasSliderVelocity } from './Types/IHasSliderVelocity';
+import { IHasLegacyLastTickOffset } from './Types/IHasLegacyLastTickOffset';
+import { IHasPathWithRepeats } from './Types/IHasPathWithRepeats';
+import { IHasVelocity } from './Types/IHasVelocity';
 
-export interface ISlidableObject extends IHitObject, IHasPath, IHasSliderVelocity {
+// TODO: Not every slidable object has legacy last tick offset, velocity or repeats.
+export interface ISlidableObject extends
+  IHasPathWithRepeats,
+  IHitObject,
+  IHasLegacyLastTickOffset,
+  IHasVelocity
+{
   /**
    * Spacing between ticks of a slidable object.
    */
@@ -20,9 +27,4 @@ export interface ISlidableObject extends IHitObject, IHasPath, IHasSliderVelocit
    * which reduces the number of ticks generated.
    */
   tickRate?: number;
-
-  /**
-   * Velocity of a slidable object.
-   */
-  velocity: number;
 }
