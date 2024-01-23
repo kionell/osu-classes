@@ -56,7 +56,7 @@ export abstract class HitObject implements IHitObject {
    * The starting X-position of this hit object.
    */
   get startX(): number {
-    return this.startPosition.floatX;
+    return this.startPosition.x;
   }
 
   set startX(value: number) {
@@ -67,7 +67,7 @@ export abstract class HitObject implements IHitObject {
    * The starting Y-position of this hit object.
    */
   get startY(): number {
-    return this.startPosition.floatY;
+    return this.startPosition.y;
   }
 
   set startY(value: number) {

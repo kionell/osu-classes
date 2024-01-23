@@ -1,204 +1,228 @@
+/**
+ * A float32 2D Vector.
+ */
 export class Vector2 {
-  /**
-   * The X-position.
-   */
-  x: number;
-
-  /**
-   * The Y-position.
-   */
-  y: number;
+  private _values = new Float32Array(2);
 
   /**
    * Creates a new instance of a Vector2.
    * @param x The X-position.
    * @param y The Y-position.
    */
-  constructor(x: number, y?: number) {
+  constructor(x = 0, y?: number) {
     this.x = x;
     this.y = isFinite(y as number) ? (y as number) : x;
   }
 
-  get floatX(): number {
-    return Math.fround(this.x);
+  /**
+   * The X-position.
+   */
+  get x(): number {
+    return this._values[0];
   }
 
-  get floatY(): number {
-    return Math.fround(this.y);
+  set x(value: number) {
+    this._values[0] = value;
   }
 
   /**
-   * Adds a vector to the current and returns a new instance.
+   * The Y-position.
+   */
+  get y(): number {
+    return this._values[1];
+  }
+
+  set y(value: number) {
+    this._values[1] = value;
+  }
+
+  /**
+   * A single precision version of X-position.
+   * Use {@link x} instead.
+   * @deprecated
+   */
+  get floatX(): number {
+    return this.x;
+  }
+
+  /**
+   * A single precision version of Y-position.
+   * Use {@link y} instead.
+   * @deprecated
+   */
+  get floatY(): number {
+    return this.y;
+  }
+
+  /**
+   * Adds a vector to the current.
    * @param vec Vector to add.
+   * @returns A new instance.
    */
   add(vec: Vector2): Vector2 {
     return new Vector2(this.x + vec.x, this.y + vec.y);
   }
 
   /**
-   * Adds a vector to the current and 
-   * returns a new instance with single precision.
+   * Adds a vector to the current.
+   * Use {@link add} instead.
    * @param vec Vector to add.
+   * @returns A new instance with single precision.
+   * @deprecated
    */
   fadd(vec: Vector2): Vector2 {
-    return new Vector2(
-      Math.fround(this.floatX + vec.floatX),
-      Math.fround(this.floatY + vec.floatY),
-    );
+    return this.add(vec);
   }
 
   /**
-   * Subtracts a vector from the current and returns a new instance.
+   * Subtracts a vector from the current.
    * @param vec Vector to substract.
+   * @returns A new instance.
    */
   subtract(vec: Vector2): Vector2 {
     return new Vector2(this.x - vec.x, this.y - vec.y);
   }
 
   /**
-   * Subtracts a vector from the current and 
-   * returns a new instance with single precision.
+   * Subtracts a vector from the current. 
+   * Use {@link substract} instead.
    * @param vec Vector to substract.
+   * @returns A new instance with single precision.
+   * @deprecated
    */
   fsubtract(vec: Vector2): Vector2 {
-    return new Vector2(
-      Math.fround(this.floatX - vec.floatX),
-      Math.fround(this.floatY - vec.floatY),
-    );
+    return this.subtract(vec);
   }
 
   /**
-   * Scales the current vector and returns a new instance.
+   * Scales the current vector.
    * @param multiplier Vector multiplier.
+   * @returns A new instance.
    */
   scale(multiplier: number): Vector2 {
-    return new Vector2(this.x * multiplier, this.y * multiplier);
-  }
-
-  /**
-   * Scales the current vector and 
-   * returns a new instance with single precision.
-   * @param vec Vector to substract.
-   */
-  fscale(multiplier: number): Vector2 {
     const floatMultiplier = Math.fround(multiplier);
 
-    return new Vector2(
-      Math.fround(this.floatX * floatMultiplier),
-      Math.fround(this.floatY * floatMultiplier),
-    );
+    return new Vector2(this.x * floatMultiplier, this.y * floatMultiplier);
   }
 
   /**
-   * Divides the current vector and returns a new instance.
+   * Scales the current vector. 
+   * Use {@link scale} instead.
+   * @param vec Vector to substract.
+   * @returns A new instance with single precision.
+   * @deprecated
+   */
+  fscale(multiplier: number): Vector2 {
+    return this.scale(multiplier);
+  }
+
+  /**
+   * Divides the current vector.
    * @param divisor Vector divisor.
+   * @returns A new instance.
    */
   divide(divisor: number): Vector2 {
-    return new Vector2(this.x / divisor, this.y / divisor);
-  }
-
-  /**
-   * Subtracts a vector from the current and 
-   * returns a new instance with single precision.
-   * @param vec Vector to substract.
-   */
-  fdivide(divisor: number): Vector2 {
     const floatDivisor = Math.fround(divisor);
 
-    return new Vector2(
-      Math.fround(this.floatX / floatDivisor),
-      Math.fround(this.floatY / floatDivisor),
-    );
+    return new Vector2(this.x / floatDivisor, this.y / floatDivisor);
   }
 
   /**
-   * Returns a dot product of two vectors.
+   * Divides the current vector.
+   * Use {@link divide} instead.
+   * @param vec Vector to substract.
+   * @returns A new instance with single precision.
+   * @deprecated
+   */
+  fdivide(divisor: number): Vector2 {
+    return this.divide(divisor);
+  }
+
+  /**
    * @param vec Second vector.
+   * @returns A dot product of two vectors.
    */
   dot(vec: Vector2): number {
-    return this.x * vec.x + this.y * vec.y;
+    const x = Math.fround(this.x * vec.x);
+    const y = Math.fround(this.y * vec.y);
+
+    return Math.fround(x + y);
   }
 
   /**
-   * Returns a dot product of two vectors with single precision.
+   * Use {@link dot} instead.
    * @param vec Second vector.
+   * @returns A dot product of two vectors with single precision.
+   * @deprecated
    */
   fdot(vec: Vector2): number {
-    return Math.fround(
-      Math.fround(
-        Math.fround(this.floatX * vec.floatX) +
-        Math.fround(this.floatY * vec.floatY),
-      ),
-    );
+    return this.dot(vec);
   }
 
   /**
-   * Returns a length of two points in a vector.
+   * @returns A length of two points in a vector.
    */
   length(): number {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
+    const x = Math.fround(this.x * this.x);
+    const y = Math.fround(this.y * this.y);
+
+    return Math.fround(Math.sqrt(Math.fround(x + y)));
   }
 
   /**
-   * Returns a single precision length of two points in a vector.
+   * Use {@link length} instead.
+   * @returns A single precision length of two points in a vector.
+   * @deprecated
    */
   flength(): number {
-    return Math.fround(
-      Math.sqrt(
-        Math.fround(
-          Math.fround(this.floatX * this.floatX) +
-          Math.fround(this.floatY * this.floatY),
-        ),
-      ),
-    );
+    return this.length();
   }
 
   /**
-   * Returns a distance between two vectors.
    * @param vec Second vector.
+   * @returns A distance between two vectors.
    */
   distance(vec: Vector2): number {
-    const x = this.x - vec.x;
-    const y = this.y - vec.y;
+    const x = Math.fround(this.x - vec.x);
+    const y = Math.fround(this.y - vec.y);
 
-    return Math.sqrt(x * x + y * y);
-  }
+    const squareX = Math.fround(x * x);
+    const squareY = Math.fround(y * y);
 
-  fdistance(vec: Vector2): number {
-    const x = Math.fround(this.floatX - vec.floatX);
-    const y = Math.fround(this.floatY - vec.floatY);
-
-    return Math.fround(
-      Math.sqrt(
-        Math.fround(Math.fround(x * x) + Math.fround(y * y)),
-      ),
-    );
+    return Math.fround(Math.sqrt(Math.fround(squareX + squareY)));
   }
 
   /**
-   * Returns a normalized vector.
+   * Use {@link distance} instead.
+   * @param vec Second vector.
+   * @returns A single precision distance between two vectors.
+   * @deprecated
+   */
+  fdistance(vec: Vector2): number {
+    return this.distance(vec);
+  }
+
+  /**
+   * @returns A normalized vector.
    */
   normalize(): Vector2 {
-    const scale = 1 / this.length();
+    const scale = Math.fround(1 / this.length());
 
     return new Vector2(this.x * scale, this.y * scale);
   }
 
   /**
-   * Returns a normalized vector with single precision.
+   * Use {@link normalize} instead.
+   * @returns A normalized vector with single precision.
+   * @deprecated
    */
   fnormalize(): Vector2 {
-    const scale = Math.fround(1 / this.flength());
-
-    return new Vector2(
-      Math.fround(this.floatX * scale),
-      Math.fround(this.floatY * scale),
-    );
+    return this.normalize();
   }
 
   /**
-   * Returns if two vectors are equal.
    * @param vec Second vector.
+   * @returns If two vectors are equal.
    */
   equals(vec: Vector2): boolean {
     return this.x === vec.x && this.y === vec.y;

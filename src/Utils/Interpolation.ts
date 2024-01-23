@@ -16,7 +16,7 @@ export function barycentricWeights(points: Vector2[]): number[] {
 
     for (let j = 0; j < n; j++) {
       if (i !== j) {
-        w[i] *= points[i].floatX - points[j].floatX;
+        w[i] *= points[i].x - points[j].x;
       }
     }
 
@@ -55,13 +55,13 @@ export function barycentricLagrange(
      * While this is not great with branch prediction,
      * it prevents NaN at control point X coordinates
      */
-    if (time === points[i].floatX) {
-      return points[i].floatY;
+    if (time === points[i].x) {
+      return points[i].y;
     }
 
-    const li = weights[i] / (time - points[i].floatX);
+    const li = weights[i] / (time - points[i].x);
 
-    numerator += li * points[i].floatY;
+    numerator += li * points[i].y;
     denominator += li;
   }
 

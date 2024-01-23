@@ -109,7 +109,7 @@ export class StoryboardSprite implements IStoryboardElementWithDuration, IHasCom
    * The start X-position of the storyboard sprite.
    */
   get startX(): number {
-    return this.startPosition.floatX;
+    return this.startPosition.x;
   }
 
   set startX(value: number) {
@@ -120,7 +120,7 @@ export class StoryboardSprite implements IStoryboardElementWithDuration, IHasCom
    * The start Y-position of the storyboard sprite.
    */
   get startY(): number {
-    return this.startPosition.floatY;
+    return this.startPosition.y;
   }
 
   set startY(value: number) {

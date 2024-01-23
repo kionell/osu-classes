@@ -57,9 +57,9 @@ export class PathApproximator {
             const l = Math.min(k, n - p - i);
 
             points[i + k] = (points[i + k]
-              .fscale(l)
-              .fadd(points[i + k + 1]))
-              .fdivide(l + 1);
+              .scale(l)
+              .add(points[i + k + 1]))
+              .divide(l + 1);
           }
         }
 
@@ -145,11 +145,11 @@ export class PathApproximator {
       const v2 = controlPoints[i];
       const v3 = i < controlPointsLength - 1
         ? controlPoints[i + 1]
-        : v2.fadd(v2).fsubtract(v1);
+        : v2.add(v2).subtract(v1);
 
       const v4 = i < controlPointsLength - 2
         ? controlPoints[i + 2]
-        : v3.fadd(v3).fsubtract(v2);
+        : v3.add(v3).subtract(v2);
 
       for (let c = 0; c < PathApproximator.CATMULL_DETAIL; c++) {
         output.push(
@@ -218,7 +218,7 @@ export class PathApproximator {
         Math.fround(Math.sin(theta)),
       );
 
-      output.push(vector2.fscale(pr.radius).fadd(pr.centre));
+      output.push(vector2.scale(pr.radius).add(pr.centre));
     }
 
     return output;
@@ -239,8 +239,8 @@ export class PathApproximator {
      * then give up and fallback to a more numerically stable method.
      */
     const sideLength = Math.fround(
-      Math.fround(b.floatY - a.floatY) * Math.fround(c.floatX - a.floatX) -
-      Math.fround(b.floatX - a.floatX) * Math.fround(c.floatY - a.floatY),
+      Math.fround(b.y - a.y) * Math.fround(c.x - a.x) -
+      Math.fround(b.x - a.x) * Math.fround(c.y - a.y),
     );
 
     if (Math.abs(sideLength) < Math.fround(0.001)) {
@@ -248,45 +248,45 @@ export class PathApproximator {
     }
 
     const d = Math.fround(2 * Math.fround((
-      Math.fround(a.floatX * b.fsubtract(c).floatY) +
-      Math.fround(b.floatX * c.fsubtract(a).floatY) +
-      Math.fround(c.floatX * a.fsubtract(b).floatY)
+      Math.fround(a.x * b.subtract(c).y) +
+      Math.fround(b.x * c.subtract(a).y) +
+      Math.fround(c.x * a.subtract(b).y)
     )));
 
     const aSq = Math.fround(
-      Math.fround(a.floatX * a.floatX) + Math.fround(a.floatY * a.floatY),
+      Math.fround(a.x * a.x) + Math.fround(a.y * a.y),
     );
 
     const bSq = Math.fround(
-      Math.fround(b.floatX * b.floatX) + Math.fround(b.floatY * b.floatY),
+      Math.fround(b.x * b.x) + Math.fround(b.y * b.y),
     );
 
     const cSq = Math.fround(
-      Math.fround(c.floatX * c.floatX) + Math.fround(c.floatY * c.floatY),
+      Math.fround(c.x * c.x) + Math.fround(c.y * c.y),
     );
 
     const centre = new Vector2(
       Math.fround(
         Math.fround(
-          Math.fround(aSq * b.fsubtract(c).floatY) +
-          Math.fround(bSq * c.fsubtract(a).floatY),
-        ) + Math.fround(cSq * a.fsubtract(b).floatY),
+          Math.fround(aSq * b.subtract(c).y) +
+          Math.fround(bSq * c.subtract(a).y),
+        ) + Math.fround(cSq * a.subtract(b).y),
       ),
       Math.fround(
         Math.fround(
-          Math.fround(aSq * c.fsubtract(b).floatX) +
-          Math.fround(bSq * a.fsubtract(c).floatX),
-        ) + Math.fround(cSq * b.fsubtract(a).floatX),
+          Math.fround(aSq * c.subtract(b).x) +
+          Math.fround(bSq * a.subtract(c).x),
+        ) + Math.fround(cSq * b.subtract(a).x),
       ),
-    ).fdivide(d);
+    ).divide(d);
 
-    const dA = a.fsubtract(centre);
-    const dC = c.fsubtract(centre);
+    const dA = a.subtract(centre);
+    const dC = c.subtract(centre);
 
-    const radius = dA.flength();
+    const radius = dA.length();
 
-    const thetaStart = Math.atan2(dA.floatY, dA.floatX);
-    let thetaEnd = Math.atan2(dC.floatY, dC.floatX);
+    const thetaStart = Math.atan2(dA.y, dA.x);
+    let thetaEnd = Math.atan2(dC.y, dC.x);
 
     while (thetaEnd < thetaStart) {
       thetaEnd += 2 * Math.PI;
@@ -299,11 +299,11 @@ export class PathApproximator {
      * Decide in which direction to draw the circle, depending on which side of
      * AC B lies.
      */
-    let orthoAtoC = c.fsubtract(a);
+    let orthoAtoC = c.subtract(a);
 
-    orthoAtoC = new Vector2(orthoAtoC.floatY, -orthoAtoC.floatX);
+    orthoAtoC = new Vector2(orthoAtoC.y, -orthoAtoC.x);
 
-    if (orthoAtoC.fdot(b.fsubtract(a)) < 0) {
+    if (orthoAtoC.dot(b.subtract(a)) < 0) {
       direction = -direction;
       thetaRange = 2 * Math.PI - thetaRange;
     }
@@ -334,12 +334,12 @@ export class PathApproximator {
 
     const weights = Interpolation.barycentricWeights(controlPoints);
 
-    let minX = controlPoints[0].floatX;
-    let maxX = controlPoints[0].floatX;
+    let minX = controlPoints[0].x;
+    let maxX = controlPoints[0].x;
 
     for (let i = 1, len = controlPoints.length; i < len; i++) {
-      minX = Math.min(minX, controlPoints[i].floatX);
-      maxX = Math.max(maxX, controlPoints[i].floatX);
+      minX = Math.min(minX, controlPoints[i].x);
+      maxX = Math.max(maxX, controlPoints[i].x);
     }
 
     const dx = maxX - minX;
@@ -367,10 +367,10 @@ export class PathApproximator {
 
     for (let i = 1, len = controlPoints.length; i < len - 1; i++) {
       vector2 = controlPoints[i - 1]
-        .fsubtract(controlPoints[i].fscale(2))
-        .fadd(controlPoints[i + 1]);
+        .subtract(controlPoints[i].scale(2))
+        .add(controlPoints[i + 1]);
 
-      if (vector2.flength() ** 2 > PathApproximator.BEZIER_TOLERANCE ** 2 * 4) {
+      if (vector2.length() ** 2 > PathApproximator.BEZIER_TOLERANCE ** 2 * 4) {
         return false;
       }
     }
@@ -406,7 +406,7 @@ export class PathApproximator {
       r[count - i - 1] = midpoints[count - i - 1];
 
       for (let j = 0; j < count - i - 1; j++) {
-        midpoints[j] = midpoints[j].fadd(midpoints[j + 1]).fdivide(2);
+        midpoints[j] = midpoints[j].add(midpoints[j + 1]).divide(2);
       }
     }
   }
@@ -441,9 +441,9 @@ export class PathApproximator {
     for (let i = 1; i < count - 1; ++i) {
       const index = 2 * i;
       const p = l[index - 1]
-        .fadd(l[index].fscale(2))
-        .fadd(l[index + 1])
-        .fscale(Math.fround(0.25));
+        .add(l[index].scale(2))
+        .add(l[index + 1])
+        .scale(Math.fround(0.25));
 
       output.push(p);
     }
@@ -477,10 +477,10 @@ export class PathApproximator {
      * result.Y = 0.5f * (2f * vec2.Y + (-vec1.Y + vec3.Y) * t + (2f * vec1.Y - 5f * vec2.Y + 4f * vec3.Y - vec4.Y) * t2 + (-vec1.Y + 3f * vec2.Y - 3f * vec3.Y + vec4.Y) * t3);
      */
     for (let i = 0; i <= 1; ++i) {
-      const value1 = i === 0 ? vec1.floatX : vec1.floatY;
-      const value2 = i === 0 ? vec2.floatX : vec2.floatY;
-      const value3 = i === 0 ? vec3.floatX : vec3.floatY;
-      const value4 = i === 0 ? vec4.floatX : vec4.floatY;
+      const value1 = i === 0 ? vec1.x : vec1.y;
+      const value2 = i === 0 ? vec2.x : vec2.y;
+      const value3 = i === 0 ? vec3.x : vec3.y;
+      const value4 = i === 0 ? vec4.x : vec4.y;
 
       const v1 = Math.fround(2 * value2);
       const v2 = Math.fround(value3 - value1);
