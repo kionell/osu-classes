@@ -2,7 +2,8 @@
  * A float32 2D Vector.
  */
 export class Vector2 {
-  private _values = new Float32Array(2);
+  private _x: number;
+  private _y: number;
 
   /**
    * Creates a new instance of a Vector2.
@@ -10,30 +11,30 @@ export class Vector2 {
    * @param y The Y-position.
    */
   constructor(x = 0, y?: number) {
-    this.x = x;
-    this.y = isFinite(y as number) ? (y as number) : x;
+    this._x = x;
+    this._y = isFinite(y as number) ? (y as number) : x;
   }
 
   /**
    * The X-position.
    */
   get x(): number {
-    return this._values[0];
+    return Math.fround(this._x);
   }
 
   set x(value: number) {
-    this._values[0] = value;
+    this._x = Math.fround(value);
   }
 
   /**
    * The Y-position.
    */
   get y(): number {
-    return this._values[1];
+    return Math.fround(this._y);
   }
 
   set y(value: number) {
-    this._values[1] = value;
+    this._y = Math.fround(value);
   }
 
   /**
@@ -46,12 +47,26 @@ export class Vector2 {
   }
 
   /**
+   * @deprecated
+   */
+  set floatX(value: number) {
+    this.x = value;
+  }
+
+  /**
    * A single precision version of Y-position.
    * Use {@link y} instead.
    * @deprecated
    */
   get floatY(): number {
     return this.y;
+  }
+
+  /**
+   * @deprecated
+   */
+  set floatY(value: number) {
+    this.y = value;
   }
 
   /**
