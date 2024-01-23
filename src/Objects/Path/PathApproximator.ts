@@ -137,31 +137,39 @@ export class PathApproximator {
    * @returns A list of vectors representing the piecewise-linear approximation.
    */
   static approximateCatmull(controlPoints: Vector2[]): Vector2[] {
-    const output = [];
-    const controlPointsLength = controlPoints.length;
+    const pointsLength = controlPoints.length;
+    const output: Vector2[] = [];
 
-    for (let i = 0; i < controlPointsLength - 1; i++) {
+    for (let i = 0; i < pointsLength - 1; i++) {
       const v1 = i > 0 ? controlPoints[i - 1] : controlPoints[i];
       const v2 = controlPoints[i];
-      const v3 = i < controlPointsLength - 1
+      const v3 = i < pointsLength - 1
         ? controlPoints[i + 1]
         : v2.add(v2).subtract(v1);
 
-      const v4 = i < controlPointsLength - 2
+      const v4 = i < pointsLength - 2
         ? controlPoints[i + 2]
         : v3.add(v3).subtract(v2);
 
       for (let c = 0; c < PathApproximator.CATMULL_DETAIL; c++) {
         output.push(
-          PathApproximator._catmullFindPoint(v1, v2, v3, v4,
+          PathApproximator._catmullFindPoint(
+            v1, 
+            v2, 
+            v3, 
+            v4,
             Math.fround(Math.fround(c) / PathApproximator.CATMULL_DETAIL),
-          ),
+          )
         );
 
         output.push(
-          PathApproximator._catmullFindPoint(v1, v2, v3, v4,
+          PathApproximator._catmullFindPoint(
+            v1, 
+            v2, 
+            v3, 
+            v4,
             Math.fround(Math.fround(c + 1) / PathApproximator.CATMULL_DETAIL),
-          ),
+          )
         );
       }
     }
@@ -207,7 +215,7 @@ export class PathApproximator {
       amountPoints = Math.max(2, validPoints);
     }
 
-    const output: Vector2[] = [];
+    const output = new Array<Vector2>(amountPoints);
 
     for (let i = 0; i < amountPoints; ++i) {
       const fract = i / (amountPoints - 1);
@@ -218,7 +226,7 @@ export class PathApproximator {
         Math.fround(Math.sin(theta)),
       );
 
-      output.push(vector2.scale(pr.radius).add(pr.centre));
+      output[i] = vector2.scale(pr.radius).add(pr.centre);
     }
 
     return output;
@@ -330,7 +338,7 @@ export class PathApproximator {
     // TODO: add some smarter logic here, chebyshev nodes?
     const NUM_STEPS = 51;
 
-    const output = [];
+    const output = new Array(NUM_STEPS);
 
     const weights = Interpolation.barycentricWeights(controlPoints);
 
@@ -348,7 +356,7 @@ export class PathApproximator {
       const x = minX + (dx / (NUM_STEPS - 1)) * i;
       const y = Math.fround(Interpolation.barycentricLagrange(controlPoints, weights, x));
 
-      output.push(new Vector2(x, y));
+      output[i] = new Vector2(x, y);
     }
 
     return output;
@@ -363,10 +371,8 @@ export class PathApproximator {
    * @returns Whether the control points are flat enough.
    */
   private static _bezierIsFlatEnough(controlPoints: Vector2[]): boolean {
-    let vector2;
-
     for (let i = 1, len = controlPoints.length; i < len - 1; i++) {
-      vector2 = controlPoints[i - 1]
+      const vector2 = controlPoints[i - 1]
         .subtract(controlPoints[i].scale(2))
         .add(controlPoints[i + 1]);
 
@@ -468,7 +474,7 @@ export class PathApproximator {
     const t2 = Math.fround(t * t);
     const t3 = Math.fround(t * t2);
 
-    const coordinates: number[] = [];
+    const coordinates = new Array<number>(2);
 
     /**
      * Please help me...
@@ -510,7 +516,7 @@ export class PathApproximator {
       const v102 = Math.fround(v101 + v8);
       const v10 = Math.fround(v102 + v9);
 
-      coordinates.push(Math.fround(Math.fround(0.5) * v10));
+      coordinates[i] = Math.fround(Math.fround(0.5) * v10);
     }
 
     return new Vector2(coordinates[0], coordinates[1]);

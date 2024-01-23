@@ -228,7 +228,7 @@ export class SliderPath {
       return;
     }
 
-    const vertices = [] as Vector2[];
+    const vertices = new Array<Vector2>(pathPointsLength);
 
     for (let i = 0; i < pathPointsLength; i++) {
       vertices[i] = this.controlPoints[i].position;
@@ -245,11 +245,22 @@ export class SliderPath {
       const segmentVertices = vertices.slice(start, i + 1);
       const segmentType = this.controlPoints[start].type || PathType.Linear;
 
-      for (const t of this._calculateSubPath(segmentVertices, segmentType)) {
-        const last = this._calculatedPath[this._calculatedPath.length - 1];
+      // No need to calculate path when there is only 1 vertex.
+      if (segmentVertices.length === 1) {
+        this._calculatedPath.push(segmentVertices[0]);
+      }
+      else if (segmentVertices.length > 1) {
+        const subPath = this._calculateSubPath(segmentVertices, segmentType);
+        const lastPoint = this._calculatedPath[this._calculatedPath.length - 1];
 
-        if (this._calculatedPath.length === 0 || !last.equals(t)) {
-          this._calculatedPath.push(t);
+        const skipFirst = this._calculatedPath.length > 0 
+          && subPath.length > 0 
+          && lastPoint.equals(subPath[0]);
+          
+        const offset = skipFirst ? 1 : 0;
+
+        for (let j = offset; j < subPath.length; j++) {
+          this._calculatedPath.push(subPath[j]);
         }
       }
 
@@ -302,15 +313,22 @@ export class SliderPath {
        * In osu-stable, if the last two control points 
        * of a slider are equal, extension is not performed.
        */
-      const controlPoints = this.controlPoints;
-      const lastPoint = controlPoints[controlPoints.length - 1];
-      const preLastPoint = controlPoints[controlPoints.length - 2];
-      const pointsAreEqual = controlPoints.length >= 2
-        && lastPoint.position.equals(preLastPoint.position);
+      const calculatedPath = this._calculatedPath;
+
+      const lastPoint = calculatedPath[calculatedPath.length - 1];
+      const preLastPoint = calculatedPath[calculatedPath.length - 2];
+      const pointsAreEqual = calculatedPath.length >= 2 && lastPoint.equals(preLastPoint);
 
       if (pointsAreEqual && this.expectedDistance > this._calculatedLength) {
         this._cumulativeLength.push(this._calculatedLength);
 
+        return;
+      }
+
+      /**
+       * Shortcut when it's just (0,0) since there's nothing to do anyway.
+       */
+      if (this._cumulativeLength.length === 1) {
         return;
       }
 
