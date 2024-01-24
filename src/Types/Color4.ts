@@ -78,6 +78,8 @@ export class Color4 {
    * @returns A string representation of this color.
    */
   toString(): string {
-    return `${this.red},${this.green},${this.blue},${this.alpha}`;
+    const alpha = Math.round(this.alpha * 255);
+
+    return `${this.red},${this.green},${this.blue},${alpha}`;
   }
 }
