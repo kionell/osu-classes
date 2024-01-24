@@ -11,6 +11,6 @@ export * from './IHasPath';
 export * from './IHasPathWithRepeats';
 export * from './IHasPosition';
 export * from './IHasRepeats';
-export * from './IHasVelocity';
+export * from './IHasSliderVelocity';
 export * from './IHasX';
 export * from './IHasY';
