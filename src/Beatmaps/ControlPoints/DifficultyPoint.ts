@@ -30,7 +30,14 @@ export class DifficultyPoint extends ControlPoint {
   generateTicks = true;
 
   /**
-   * Indicates whether this difficulty control point should be considered as legacy or not.
+   * Indicates whether this difficulty control point 
+   * should be considered as legacy or not.
+   * All difficulty control points that are parsed 
+   * from an osu!stable beatmap file are legacy by default.
+   * Legacy flag allows beatmap converters to choose between 
+   * {@link sliderVelocity} and {@link bpmMultiplier} 
+   * as they have different precision.
+   * This is mainly used in osu!taiko (and somewhere in osu!mania?)
    */
   isLegacy = false;
 
