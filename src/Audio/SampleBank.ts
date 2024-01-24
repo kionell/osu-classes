@@ -19,7 +19,7 @@ export class SampleBank {
    * The bank identifier to use for the base ("hitnormal") sample.
    * Transferred to the bank of a hit sample when appropriate.
    */
-  bankForNormal: Lowercase<keyof typeof SampleSet> = 'none';
+  bankForNormal: Lowercase<keyof typeof SampleSet> | null = null;
 
   /**
    * The bank identifier to use for the base ("hitnormal") sample.
@@ -29,7 +29,6 @@ export class SampleBank {
    */
   get normalSet(): SampleSet {
     switch (this.bankForNormal) {
-      case 'none': return SampleSet.None;
       case 'normal': return SampleSet.Normal;
       case 'soft': return SampleSet.Soft;
       case 'drum': return SampleSet.Drum;
@@ -46,7 +45,7 @@ export class SampleBank {
    * The bank identifier to use for additions ("hitwhistle", "hitfinish", "hitclap").
    * Transferred to the bank of a hit sample when appropriate.
    */
-  bankForAddition: Lowercase<keyof typeof SampleSet> = 'none';
+  bankForAddition: Lowercase<keyof typeof SampleSet> | null = null;
 
   /**
    * The bank identifier to use for additions ("hitwhistle", "hitfinish", "hitclap").
@@ -56,11 +55,12 @@ export class SampleBank {
    */
   get additionSet(): SampleSet {
     switch (this.bankForAddition) {
-      case 'none': return SampleSet.None;
       case 'normal': return SampleSet.Normal;
       case 'soft': return SampleSet.Soft;
       case 'drum': return SampleSet.Drum;
     }
+
+    return SampleSet.None;
   }
 
   set additionSet(value: SampleSet) {
