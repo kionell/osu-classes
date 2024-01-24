@@ -1,3 +1,5 @@
+import { SampleSet } from './Enums';
+
 /**
  * Describes a gameplay hit sample.
  */
@@ -52,7 +54,7 @@ export class HitSample {
   /**
    * The bank to load the sample from.
    */
-  bank: string;
+  bank: Lowercase<keyof typeof SampleSet>;
 
   /**
    * An optional suffix to provide priority lookup.
@@ -101,7 +103,23 @@ export class HitSample {
    * @deprecated
    */
   set sampleSet(value: string) {
-    this.bank = value;
+    switch (value) {
+      case SampleSet[SampleSet.Normal]:
+        this.bank = 'normal';
+        break;
+
+      case SampleSet[SampleSet.Soft]:
+        this.bank = 'soft';
+        break;
+
+      case SampleSet[SampleSet.Drum]:
+        this.bank = 'drum';
+        break;
+
+      case SampleSet[SampleSet.None]:
+        this.bank = 'none';
+        break;
+    }
   }
 
   /**
@@ -127,7 +145,7 @@ export class HitSample {
       && options.bank !== 'none';
 
     this.bank = this.bankSpecified
-      ? options?.bank as string
+      ? options?.bank as Lowercase<keyof typeof SampleSet>
       : HitSample.BANK_NORMAL;
 
     this.customSampleBank = options?.customSampleBank ?? 0;
