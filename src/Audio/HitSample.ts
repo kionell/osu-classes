@@ -2,6 +2,11 @@
  * Describes a gameplay hit sample.
  */
 export class HitSample {
+  /**
+   * The default instance of a hit sample.
+   */
+  static readonly DEFAULT = new HitSample();
+
   static readonly HIT_NORMAL = 'hitnormal';
   static readonly HIT_WHISTLE = 'hitwhistle';
   static readonly HIT_FINISH = 'hitfinish';
