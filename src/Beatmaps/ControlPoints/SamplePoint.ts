@@ -30,7 +30,7 @@ export class SamplePoint extends ControlPoint {
   /**
    * The default sample bank at this control point.
    */
-  bank = SamplePoint.DEFAULT_BANK;
+  bank: Lowercase<keyof typeof SampleSet> = SamplePoint.DEFAULT_BANK;
 
   /**
    * The default sample volume at this control point.
