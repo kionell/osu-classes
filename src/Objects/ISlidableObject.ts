@@ -1,14 +1,19 @@
 import { IHitObject } from './IHitObject';
 import { IHasLegacyLastTickOffset } from './Types/IHasLegacyLastTickOffset';
 import { IHasPathWithRepeats } from './Types/IHasPathWithRepeats';
-import { IHasSliderVelocity } from './Types/IHasSliderVelocity';
 
-// TODO: Not every slidable object has legacy last tick offset, velocity or repeats.
+/**
+ * Use {@link IHasPath} or {@link IHasPathWithRepeats} 
+ * to differentiante between slidable object and other type of hit object.
+ * Creating this wasn't the best idea because it isn't robust 
+ * at all and sometimes can't be applied to every ruleset.
+ * This will be removed soon.
+ * @deprecated
+ */
 export interface ISlidableObject extends
   IHitObject,
   IHasPathWithRepeats,
-  IHasLegacyLastTickOffset,
-  IHasSliderVelocity
+  IHasLegacyLastTickOffset
 {
   /**
    * Spacing between ticks of a slidable object.

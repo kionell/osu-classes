@@ -45,7 +45,7 @@ export abstract class HitObject implements IHitObject {
   /**
    * The position at which the hit object starts.
    */
-  startPosition: Vector2 = new Vector2(0, 0);
+  startPosition: Vector2 = new Vector2();
 
   /**
    * Hit windows of this hit object.

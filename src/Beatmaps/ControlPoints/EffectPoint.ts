@@ -30,6 +30,7 @@ export class EffectPoint extends ControlPoint {
   /**
    * Whether the first bar line of this control point is ignored.
    * This property was moved to timing points.
+   * Use the same property from timing points.
    * @deprecated
    */
   omitFirstBarLine = false;

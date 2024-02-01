@@ -30,6 +30,9 @@ export interface IHitObject {
 
   /**
    * Hit windows of this hit object.
+   * Not every type of hit objects has hit windows.
+   * This will be removed soon.
+   * @deprecated
    */
   hitWindows: HitWindows;
 
