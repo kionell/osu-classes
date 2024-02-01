@@ -253,10 +253,10 @@ export class SliderPath {
         const subPath = this._calculateSubPath(segmentVertices, segmentType);
         const lastPoint = this._calculatedPath[this._calculatedPath.length - 1];
 
-        const skipFirst = this._calculatedPath.length > 0 
-          && subPath.length > 0 
+        const skipFirst = this._calculatedPath.length > 0
+          && subPath.length > 0
           && lastPoint.equals(subPath[0]);
-          
+
         const offset = skipFirst ? 1 : 0;
 
         for (let j = offset; j < subPath.length; j++) {
