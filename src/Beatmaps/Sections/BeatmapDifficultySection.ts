@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { DifficultyRange } from '../../Scoring';
+
 export class BeatmapDifficultySection {
   /**
    * The default value used for all difficulty settings 
@@ -121,11 +124,13 @@ export class BeatmapDifficultySection {
 
   /**
    * Maps a difficulty value [0, 10] to a two-piece linear range of values.
+   * Use {@link DifficultyRange.map} instead.
    * @param diff The difficulty value to be mapped.
    * @param min Minimum of the resulting range which will be achieved by a difficulty value of 0.
    * @param mid Midpoint of the resulting range which will be achieved by a difficulty value of 5.
    * @param max Maximum of the resulting range which will be achieved by a difficulty value of 10.
    * @returns Value to which the difficulty value maps in the specified range.
+   * @deprecated
    */
   static range(diff: number, min: number, mid: number, max: number): number {
     if (diff > 5) {
