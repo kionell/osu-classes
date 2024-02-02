@@ -13,44 +13,54 @@ export abstract class HitObject implements IHitObject {
   /**
    * The status of kiai mode at the current hit object.
    */
-  kiai = false;
+  kiai: boolean;
 
   /**
    * Nested objects of the hit object.
    */
-  nestedHitObjects: HitObject[] = [];
+  nestedHitObjects: HitObject[];
 
   /**
    * The time at which the hit object starts.
    */
-  startTime = 0;
+  startTime: number;
 
   /**
    * Parsed hit type data of a hit object.
    */
-  hitType: HitType = HitType.Normal;
+  hitType: HitType;
 
   /**
    * Parsed hit sound data of a hit object.
    * Use {@link samples} to work with hitsound data.
    * @deprecated
    */
-  hitSound: HitSound = HitSound.Normal;
+  hitSound: HitSound;
 
   /**
    * The samples to be played when this hit object is hit.
    */
-  samples: HitSample[] = [];
+  samples: HitSample[];
 
   /**
    * The position at which the hit object starts.
    */
-  startPosition: Vector2 = new Vector2();
+  startPosition: Vector2;
 
   /**
    * Hit windows of this hit object.
    */
   hitWindows: HitWindows = new HitWindows();
+
+  constructor(options?: Partial<HitObject>) {
+    this.startPosition = options?.startPosition ?? new Vector2();
+    this.startTime = options?.startTime ?? 0;
+    this.hitType = options?.hitType ?? HitType.Normal;
+    this.hitSound = options?.hitSound ?? HitSound.Normal;
+    this.samples = options?.samples ?? [];
+    this.kiai = options?.kiai ?? false;
+    this.nestedHitObjects = options?.nestedHitObjects ?? [];
+  }
 
   /**
    * The starting X-position of this hit object.
@@ -134,6 +144,7 @@ export abstract class HitObject implements IHitObject {
     cloned.hitSound = this.hitSound;
     cloned.samples = this.samples.map((s) => s.clone());
     cloned.kiai = this.kiai;
+    cloned.nestedHitObjects = this.nestedHitObjects.map((n) => n.clone());
 
     return cloned;
   }
