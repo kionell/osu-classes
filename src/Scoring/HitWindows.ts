@@ -181,8 +181,16 @@ export class HitWindows {
   };
 
   /**
+   * Use {@link EMPTY} instead.
+   * @deprecated
+   */
+  static get empty(): HitWindows {
+    return this.EMPTY;
+  }
+
+  /**
    * An empty hit windows with only misses and perfects.
    * No time values are provided (meaning instantaneous hit or miss).
    */
-  static empty: HitWindows = new HitWindows.EmptyHitWindows();
+  static readonly EMPTY: HitWindows = new HitWindows.EmptyHitWindows();
 }
