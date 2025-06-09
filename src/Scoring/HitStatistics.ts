@@ -53,14 +53,14 @@ export class HitStatistics extends Map<HitResult, number> {
       case HitResult.Good: return 'good';
       case HitResult.Great: return 'great';
       case HitResult.Perfect: return 'perfect';
-      case HitResult.SmallTickMiss: return 'smallTickMiss';
-      case HitResult.SmallTickHit: return 'smallTickHit';
-      case HitResult.LargeTickMiss: return 'largeTickMiss';
-      case HitResult.LargeTickHit: return 'largeTickHit';
-      case HitResult.SmallBonus: return 'smallBonus';
-      case HitResult.LargeBonus: return 'largeBonus';
-      case HitResult.IgnoreMiss: return 'ignoreMiss';
-      case HitResult.IgnoreHit: return 'ignoreHit';
+      case HitResult.SmallTickMiss: return 'small_tick_miss';
+      case HitResult.SmallTickHit: return 'small_tick_hit';
+      case HitResult.LargeTickMiss: return 'large_tick_miss';
+      case HitResult.LargeTickHit: return 'large_tick_hit';
+      case HitResult.SmallBonus: return 'small_bonus';
+      case HitResult.LargeBonus: return 'large_bonus';
+      case HitResult.IgnoreMiss: return 'ignore_miss';
+      case HitResult.IgnoreHit: return 'ignore_hit';
     }
   }
 
@@ -73,14 +73,14 @@ export class HitStatistics extends Map<HitResult, number> {
       case 'good': return HitResult.Good;
       case 'great': return HitResult.Great;
       case 'perfect': return HitResult.Perfect;
-      case 'smallTickMiss': return HitResult.SmallTickMiss;
-      case 'smallTickHit': return HitResult.SmallTickHit;
-      case 'largeTickMiss': return HitResult.LargeTickMiss;
-      case 'largeTickHit': return HitResult.LargeTickHit;
-      case 'smallBonus': return HitResult.SmallBonus;
-      case 'largeBonus': return HitResult.LargeBonus;
-      case 'ignoreMiss': return HitResult.IgnoreMiss;
-      case 'ignoreHit': return HitResult.IgnoreHit;
+      case 'small_tick_miss': return HitResult.SmallTickMiss;
+      case 'small_tick_hit': return HitResult.SmallTickHit;
+      case 'large_tick_miss': return HitResult.LargeTickMiss;
+      case 'large_tick_hit': return HitResult.LargeTickHit;
+      case 'small_bonus': return HitResult.SmallBonus;
+      case 'large_bonus': return HitResult.LargeBonus;
+      case 'ignore_miss': return HitResult.IgnoreMiss;
+      case 'ignore_hit': return HitResult.IgnoreHit;
     }
   }
 }
