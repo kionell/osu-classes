@@ -9,27 +9,35 @@ export class Replay implements IReplay {
   /**
    * osu! game version of this replay.
    */
-  gameVersion = 0;
+  gameVersion: number;
 
   /**
    * Game mode of this replay.
    */
-  mode = 0;
+  mode: number;
 
   /**
    * Replay MD5 hash.
    */
-  hashMD5 = '';
+  hashMD5: string;
 
   /**
    * Replay frames.
    */
-  frames: ReplayFrame[] = [];
+  frames: ReplayFrame[];
 
   /**
    * Life bar of the replay.
    */
-  lifeBar: LifeBarFrame[] = [];
+  lifeBar: LifeBarFrame[];
+
+  constructor(data: Partial<Replay>) {
+    this.gameVersion = data?.gameVersion ?? 0;
+    this.mode = data?.mode ?? 0;
+    this.hashMD5 = data?.hashMD5 ?? '';
+    this.frames = data?.frames ?? [];
+    this.lifeBar = data?.lifeBar ?? [];
+  }
 
   /**
    * Replay length in milliseconds.
