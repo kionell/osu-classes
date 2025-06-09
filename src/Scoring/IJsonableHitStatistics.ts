@@ -14,4 +14,7 @@ export interface IJsonableHitStatistics {
   large_bonus?: number;
   ignore_miss?: number;
   ignore_hit?: number;
+  combo_break?: number;
+  slider_tail_hit?: number;
+  legacy_combo_increase?: number;
 }

@@ -61,6 +61,9 @@ export class HitStatistics extends Map<HitResult, number> {
       case HitResult.LargeBonus: return 'large_bonus';
       case HitResult.IgnoreMiss: return 'ignore_miss';
       case HitResult.IgnoreHit: return 'ignore_hit';
+      case HitResult.ComboBreak: return 'combo_break';
+      case HitResult.SliderTailHit: return 'slider_tail_hit';
+      case HitResult.LegacyComboIncrease: return 'legacy_combo_increase';
     }
   }
 
@@ -81,6 +84,9 @@ export class HitStatistics extends Map<HitResult, number> {
       case 'large_bonus': return HitResult.LargeBonus;
       case 'ignore_miss': return HitResult.IgnoreMiss;
       case 'ignore_hit': return HitResult.IgnoreHit;
+      case 'combo_break': return HitResult.IgnoreHit;
+      case 'slider_tail_hit': return HitResult.IgnoreHit;
+      case 'legacy_combo_increase': return HitResult.IgnoreHit;
     }
   }
 }

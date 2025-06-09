@@ -56,4 +56,29 @@ export enum HitResult {
    * Indicates a hit that should be ignored for scoring purposes.
    */
   IgnoreHit,
+
+  /**
+   * Indicates that a combo break should occur, but does not otherwise affect score.
+   * May be paired with {@link IgnoreHit}.
+   */
+  ComboBreak,
+
+  /**
+   * A special tick judgement to increase the valuation of the final tick of a slider.
+   * The default minimum result is {@link IgnoreMiss}, but may be overridden to {@link LargeTickMiss}.
+   */
+  SliderTailHit,
+
+  /**
+   * A special result used as a padding value for legacy rulesets. 
+   * It is a hit type and affects combo, but does not affect the base score (does not affect accuracy).
+   * 
+   * DO NOT USE FOR ANYTHING EVER.
+   * 
+   * This is used when dealing with legacy scores, 
+   * which historically only have counts stored for 300/100/50/miss.
+   * For these scores, we pad the hit statistics with 
+   * `LegacyComboIncrease` to meet the correct max combo for the score.
+   */
+  LegacyComboIncrease,
 }
