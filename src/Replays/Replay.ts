@@ -31,7 +31,7 @@ export class Replay implements IReplay {
    */
   lifeBar: LifeBarFrame[];
 
-  constructor(data: Partial<Replay>) {
+  constructor(data?: Partial<Replay>) {
     this.gameVersion = data?.gameVersion ?? 0;
     this.mode = data?.mode ?? 0;
     this.hashMD5 = data?.hashMD5 ?? '';

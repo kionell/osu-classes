@@ -17,7 +17,7 @@ export class LegacyReplaySoloScoreInfo {
   // TODO: Add support for osu!lazer mods.
   // mods: APIMod[];
 
-  constructor(data: Partial<LegacyReplaySoloScoreInfo>) {
+  constructor(data?: Partial<LegacyReplaySoloScoreInfo>) {
     this.onlineId = data?.onlineId ?? -1;
     this.statistics = data?.statistics ?? new HitStatistics();
     this.maximumStatistics = data?.maximumStatistics ?? new HitStatistics();
