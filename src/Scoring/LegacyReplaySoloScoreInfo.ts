@@ -1,4 +1,5 @@
-import { HitStatistics, ScoreRank } from 'osu-classes';
+import { ScoreRank } from './Enums/ScoreRank';
+import { HitStatistics } from './HitStatistics';
 import { IJsonableLegacyReplaySoloScoreInfo } from './IJsonableLegacyReplaySoloScoreInfo';
 
 /**
