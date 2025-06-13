@@ -42,6 +42,7 @@ export interface IMod {
 
   /**
    * Incompatible mods.
+   * @deprecated
    */
   incompatibles: ModBitwise;
 }

@@ -150,8 +150,9 @@ export class ScoreInfo extends LegacyScoreExtensions implements IScoreInfo {
   /**
    * Raw mods of the play that are neutral to any of the rulesets.
    * This can be either bitwise or stringified mod combination.
-   * {@link ScoreInfo} can't work with mod combinations without an actual ruleset instance.
    * TODO: Implement it in a better way???
+   * @deprecated Edit {@link apiMods} instead.
+   * Parsing a {@link ScoreInfo} requires an actual ruleset instance.
    */
   get rawMods(): string | number {
     return this._rawMods;

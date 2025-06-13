@@ -24,5 +24,5 @@ export abstract class Mod implements IMod {
   /**
    * The mods this mod cannot be enabled with.
    */
-  incompatibleMods: IMod[] = [];
+  incompatibleMods: (new () => IMod)[] = [];
 }
