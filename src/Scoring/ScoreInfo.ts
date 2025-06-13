@@ -69,26 +69,29 @@ export class ScoreInfo extends LegacyScoreExtensions implements IScoreInfo {
   private _mods: ModCombination | null = null;
   private _apiMods: APIMod[] | null = null;
   private _rawMods: string | number = 0;
+  private _accuracy: number | null = null;
+  private _rank: keyof typeof ScoreRank | null = null;
 
   /**
    * Score accuracy.
    */
   get accuracy(): number {
-    return Accuracy.calculate(this);
+    return this._accuracy ?? Accuracy.calculate(this);
   }
 
-  set accuracy(_: number) {
-    return;
+  set accuracy(value: number) {
+    this._accuracy = value;
   }
 
   /**
    * Score rank.
    */
   get rank(): keyof typeof ScoreRank {
-    return Rank.calculate(this);
+    return this._rank ?? Rank.calculate(this);
   }
 
   set rank(value: keyof typeof ScoreRank) {
+    this._rank = value;
     this.passed = value !== 'F';
   }
 
