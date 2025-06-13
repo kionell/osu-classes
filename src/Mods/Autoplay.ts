@@ -9,6 +9,7 @@ export abstract class Autoplay extends Mod {
   type: ModType = ModType.Automation;
   multiplier = 1;
   isRanked = false;
+  isUserPlayable = false;
 
   incompatibles: ModBitwise = ModBitwise.NoFail |
     ModBitwise.SuddenDeath |

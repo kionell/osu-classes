@@ -1,6 +1,8 @@
+import { APIMod } from '../Mods/APIMod';
 import { ScoreRank } from './Enums/ScoreRank';
 import { HitStatistics } from './HitStatistics';
 import { IJsonableLegacyReplaySoloScoreInfo } from './IJsonableLegacyReplaySoloScoreInfo';
+import { IScoreInfo } from './IScoreInfo';
 
 /**
  * A minified version of SoloScoreInfo retrofit onto the end of legacy replay files (.osr),
@@ -8,6 +10,7 @@ import { IJsonableLegacyReplaySoloScoreInfo } from './IJsonableLegacyReplaySoloS
  */
 export class LegacyReplaySoloScoreInfo {
   onlineId: number;
+  mods: APIMod[];
   statistics: HitStatistics;
   maximumStatistics: HitStatistics;
   clientVersion: string;
@@ -15,11 +18,9 @@ export class LegacyReplaySoloScoreInfo {
   userId: number;
   totalScoreWithoutMods: number;
 
-  // TODO: Add support for osu!lazer mods.
-  // mods: APIMod[];
-
   constructor(data?: Partial<LegacyReplaySoloScoreInfo>) {
     this.onlineId = data?.onlineId ?? -1;
+    this.mods = data?.mods ?? [];
     this.statistics = data?.statistics ?? new HitStatistics();
     this.maximumStatistics = data?.maximumStatistics ?? new HitStatistics();
     this.clientVersion = data?.clientVersion ?? '';
@@ -28,9 +29,23 @@ export class LegacyReplaySoloScoreInfo {
     this.totalScoreWithoutMods = data?.totalScoreWithoutMods ?? 0;
   }
 
+  static fromScore(score: IScoreInfo): LegacyReplaySoloScoreInfo {
+    return new LegacyReplaySoloScoreInfo({
+      onlineId: score.id,
+      mods: score.apiMods,
+      statistics: score.statistics,
+      maximumStatistics: score.maximumStatistics,
+      clientVersion: score.clientVersion,
+      rank: score.rank,
+      userId: score.userId,
+      totalScoreWithoutMods: 0,
+    });
+  }
+
   static fromJSON(score: IJsonableLegacyReplaySoloScoreInfo): LegacyReplaySoloScoreInfo {
     return new LegacyReplaySoloScoreInfo({
       onlineId: score.online_id,
+      mods: score.mods.map((m) => APIMod.fromJSON(m)),
       statistics: HitStatistics.fromJSON(score.statistics),
       maximumStatistics: HitStatistics.fromJSON(score.maximum_statistics),
       clientVersion: score.client_version,
@@ -38,5 +53,18 @@ export class LegacyReplaySoloScoreInfo {
       userId: score.user_id,
       totalScoreWithoutMods: score.total_score_without_mods,
     });
+  }
+
+  toJSON(): IJsonableLegacyReplaySoloScoreInfo {
+    return {
+      online_id: this.onlineId,
+      mods: this.mods,
+      statistics: this.statistics.toJSON(),
+      maximum_statistics: this.maximumStatistics.toJSON(),
+      client_version: this.clientVersion,
+      rank: this.rank,
+      user_id: this.userId,
+      total_score_without_mods: this.totalScoreWithoutMods,
+    };
   }
 }

@@ -16,6 +16,11 @@ export abstract class LegacyScoreExtensions {
   statistics = new HitStatistics();
 
   /**
+   * Maximum hit statistics.
+   */
+  maximumStatistics = new HitStatistics();
+
+  /**
    * This is only stored for legacy scores. 
    * Currently osu!stable uses Geki & Katu in osu!standard.
    * New osu!lazer score format just ignores that data.

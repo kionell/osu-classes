@@ -8,6 +8,7 @@ import { BeatmapInfo } from '../Beatmaps/BeatmapInfo';
 import { IBeatmapInfo } from '../Beatmaps/IBeatmapInfo';
 import { IRuleset } from '../Rulesets';
 import { ModCombination } from '../Mods';
+import { APIMod } from '../Mods/APIMod';
 
 /**
  * A score information.
@@ -16,12 +17,20 @@ export class ScoreInfo extends LegacyScoreExtensions implements IScoreInfo {
   /**
    * A score ID.
    */
-  id = 0;
+  id = -1;
 
   /**
    * Total score of the play.
    */
   totalScore = 0;
+
+  /**
+   * The version of processing applied to calculate total score as stored in the database.
+   * If this does not match latest total score version in the score encoder
+   * the total score has not yet been updated to reflect the current scoring values.
+   * This may not match the version stored in the replay files.
+   */
+  totalScoreVersion = 0;
 
   /**
    * The performance of the play.
@@ -44,9 +53,21 @@ export class ScoreInfo extends LegacyScoreExtensions implements IScoreInfo {
    */
   perfect = false;
 
+  /**
+   * The version of the client this score was set using.
+   * Sourced from version of the game at the point of score submission.
+   */
+  clientVersion = '';
+
+  /**
+   * Whether this {@link ScoreInfo} represents a legacy (osu!stable) score.
+   */
+  isLegacyScore = false;
+
   private _ruleset: IRuleset | null = null;
   private _rulesetId = 0;
   private _mods: ModCombination | null = null;
+  private _apiMods: APIMod[] | null = null;
   private _rawMods: string | number = 0;
 
   /**
@@ -92,6 +113,25 @@ export class ScoreInfo extends LegacyScoreExtensions implements IScoreInfo {
 
   set rulesetId(value: number) {
     this._rulesetId = value;
+  }
+
+  /**
+   * Mods of the play in the form compatible with osu! api.
+   */
+  get apiMods(): APIMod[] {
+    if (this._apiMods !== null) {
+      return this._apiMods;
+    }
+
+    if (this._mods !== null) {
+      return this._mods.acronyms.map((a) => new APIMod({ acronym: a }));
+    }
+
+    return [];
+  }
+
+  set apiMods(mods: APIMod[] | null) {
+    this._apiMods = mods;
   }
 
   /**

@@ -1,9 +1,10 @@
 import { ScoreRank } from './Enums/ScoreRank';
 import { IJsonableScoreInfo } from './IJsonableScoreInfo';
 import { HitStatistics } from './HitStatistics';
-import { IBeatmapInfo } from '../Beatmaps';
-import { IRuleset } from '../Rulesets';
-import { ModCombination } from '../Mods';
+import { IBeatmapInfo } from '../Beatmaps/IBeatmapInfo';
+import { IRuleset } from '../Rulesets/IRuleset';
+import { ModCombination } from '../Mods/ModCombination';
+import { APIMod } from '../Mods/APIMod';
 
 /**
  * A score information.
@@ -23,6 +24,14 @@ export interface IScoreInfo {
    * Total score of the play.
    */
   totalScore: number;
+
+  /**
+   * The version of processing applied to calculate total score as stored in the database.
+   * If this does not match latest total score version in the score encoder
+   * the total score has not yet been updated to reflect the current scoring values.
+   * This may not match the version stored in the replay files.
+   */
+  totalScoreVersion: number;
 
   /**
    * Total accuracy of the play.
@@ -50,6 +59,17 @@ export interface IScoreInfo {
   perfect: boolean;
 
   /**
+   * The version of the client this score was set using.
+   * Sourced from version of the game at the point of score submission.
+   */
+  clientVersion: string;
+
+  /**
+   * Whether this {@link ScoreInfo} represents a legacy (osu!stable) score.
+   */
+  isLegacyScore: boolean;
+
+  /**
    * Ruleset instance.
    */
   ruleset: IRuleset | null;
@@ -58,6 +78,11 @@ export interface IScoreInfo {
    * Ruleset ID of the play.
    */
   rulesetId: number;
+
+  /**
+   * Mods of the play in the form compatible with osu! api.
+   */
+  apiMods: APIMod[];
 
   /**
    * Mods of the play.
@@ -98,6 +123,11 @@ export interface IScoreInfo {
    * Hit statistics.
    */
   statistics: HitStatistics;
+
+  /**
+   * Maximum hit statistics.
+   */
+  maximumStatistics: HitStatistics;
 
   /**
    * Beatmap MD5 hash.

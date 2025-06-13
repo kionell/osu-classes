@@ -9,6 +9,7 @@ export abstract class Cinema extends Mod {
   type: ModType = ModType.Fun;
   multiplier = 1;
   isRanked = false;
+  isUserPlayable = false;
 
   incompatibles: ModBitwise = ModBitwise.NoFail |
     ModBitwise.SuddenDeath |

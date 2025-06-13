@@ -33,6 +33,14 @@ export interface IMod {
   isRanked: boolean;
 
   /**
+   * Whether this mod can be played by a real human user.
+   * Non-user-playable mods are not viable for single-player score submission.
+   * 
+   * For example: Double Time is user-playable and Autoplay is not user-playable. 
+   */
+  isUserPlayable: boolean;
+
+  /**
    * Incompatible mods.
    */
   incompatibles: ModBitwise;
