@@ -6,6 +6,194 @@ import { IJsonableHitStatistics } from './IJsonableHitStatistics';
  */
 export class HitStatistics extends Map<HitResult, number> {
   /**
+   * Whether a {@link HitResult} increases the combo.
+   */
+  static increasesCombo(result: HitResult): boolean {
+    return this.affectsCombo(result) && this.isHit(result);
+  }
+
+  /**
+   * Whether a {@link HitResult} breaks the combo and resets it back to zero.
+   */
+  static breaksCombo(result: HitResult): boolean {
+    return this.affectsCombo(result) && !this.isHit(result);
+  }
+
+  /**
+   * Whether a {@link HitResult} increases or breaks the combo.
+   */
+  static affectsCombo(result: HitResult): boolean {
+    switch (result) {
+      case HitResult.Miss:
+      case HitResult.Meh:
+      case HitResult.Ok:
+      case HitResult.Good:
+      case HitResult.Great:
+      case HitResult.Perfect:
+      case HitResult.LargeTickHit:
+      case HitResult.LargeTickMiss:
+      case HitResult.LegacyComboIncrease:
+      case HitResult.ComboBreak:
+      case HitResult.SliderTailHit:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} affects the accuracy portion of the score.
+   */
+  static affectsAccuracy(result: HitResult): boolean {
+    switch (result) {
+      // LegacyComboIncrease is a special non-gameplay type 
+      // which is neither a basic, tick, bonus, or accuracy-affecting result.
+      case HitResult.LegacyComboIncrease:
+        return false;
+
+      // ComboBreak is a special type that only affects combo. 
+      // It cannot be considered as basic, tick, bonus, or accuracy-affecting.
+      case HitResult.ComboBreak:
+        return false;
+
+      default:
+        return this.isScorable(result) && !this.isBonus(result);
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} is a non-tick and non-bonus result.
+   */
+  static isBasic(result: HitResult): boolean {
+    switch (result) {
+      // LegacyComboIncrease is a special non-gameplay type 
+      // which is neither a basic, tick, bonus, or accuracy-affecting result.
+      case HitResult.LegacyComboIncrease:
+        return false;
+
+      // ComboBreak is a special type that only affects combo. 
+      // It cannot be considered as basic, tick, bonus, or accuracy-affecting.
+      case HitResult.ComboBreak:
+        return false;
+
+      default:
+        return this.isScorable(result) && !this.isTick(result) && !this.isBonus(result);
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} should be counted as a tick.
+   */
+  static isTick(result: HitResult): boolean {
+    switch (result) {
+      case HitResult.LargeTickHit:
+      case HitResult.LargeTickMiss:
+      case HitResult.SmallTickHit:
+      case HitResult.SmallTickMiss:
+      case HitResult.SliderTailHit:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} should be counted as bonus score.
+   */
+  static isBonus(result: HitResult): boolean {
+    switch (result) {
+      case HitResult.SmallBonus:
+      case HitResult.LargeBonus:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} represents a miss of any type.
+   * Of note, both {@link isMiss} and {@link isHit} return `false` for {@link HitResult.None}.
+   */
+  static isMiss(result: HitResult): boolean {
+    switch (result) {
+      case HitResult.IgnoreMiss:
+      case HitResult.Miss:
+      case HitResult.SmallTickMiss:
+      case HitResult.LargeTickMiss:
+      case HitResult.ComboBreak:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} represents a successful hit.
+   * Of note, both {@link isMiss} and {@link isHit} return `false` for {@link HitResult.None}.
+   */
+  static isHit(result: HitResult): boolean {
+    switch (result) {
+      case HitResult.None:
+      case HitResult.IgnoreMiss:
+      case HitResult.Miss:
+      case HitResult.SmallTickMiss:
+      case HitResult.LargeTickMiss:
+      case HitResult.ComboBreak:
+        return false;
+
+      default:
+        return true;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} is scorable.
+   */
+  static isScorable(result: HitResult): boolean {
+    switch (result) {
+      // LegacyComboIncrease is not actually scorable 
+      // (in terms of usable by rulesets for that purpose), 
+      // but needs to be defined as such to be correctly included in statistics output.
+      case HitResult.LegacyComboIncrease:
+        return true;
+
+      // ComboBreak is its own type that affects score via combo.
+      case HitResult.ComboBreak:
+        return true;
+
+      case HitResult.SliderTailHit:
+        return true;
+
+      default:
+        // Note that IgnoreHit and IgnoreMiss are excluded as they do not affect score.
+        return result >= HitResult.Miss && result < HitResult.IgnoreMiss;
+    }
+  }
+
+  /**
+   * Whether a {@link HitResult} is valid within a given {@link HitResult} range.
+   * @param result The {@link HitResult} to check.
+   * @param minResult The minimum {@link HitResult}.
+   * @param maxResult The maximum {@link HitResult}.
+   * @returns Whether {@link HitResult} falls between {@link minResult} and {@link maxResult}.
+   */
+  static isValidHitResult(result: HitResult, minResult: HitResult, maxResult: HitResult): boolean {
+    if (result === HitResult.None) {
+      return false;
+    }
+
+    if (result === minResult || result === maxResult) {
+      return true;
+    }
+
+    return result > minResult && result < maxResult;
+  }
+
+  /**
    * Gets the number of hit results by their type.
    * If hit result is not present sets it to default value and returns it.
    * @param key Hit result type.
