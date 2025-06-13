@@ -28,7 +28,7 @@ export interface IMod {
   multiplier: number;
 
   /**
-   * Returns if this mod is ranked.
+   * Whether scores with this mod active can give performance points.
    */
   isRanked: boolean;
 

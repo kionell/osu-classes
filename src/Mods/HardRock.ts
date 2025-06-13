@@ -1,22 +1,15 @@
 import { BeatmapDifficultySection } from '../Beatmaps/Sections/BeatmapDifficultySection';
-
-import { IMod } from './IMod';
 import { IApplicableToDifficulty } from './Types/IApplicableToDifficulty';
-
 import { ModBitwise } from './Enums/ModBitwise';
 import { ModType } from './Enums/ModType';
+import { Mod } from './Mod';
 
-export abstract class HardRock implements IMod, IApplicableToDifficulty {
+export abstract class HardRock extends Mod implements IApplicableToDifficulty {
   name = 'Hard Rock';
-
   acronym = 'HR';
-
   bitwise: ModBitwise = ModBitwise.HardRock;
-
   type: ModType = ModType.DifficultyIncrease;
-
   multiplier = 1.06;
-
   isRanked = true;
 
   incompatibles: ModBitwise = ModBitwise.Easy;

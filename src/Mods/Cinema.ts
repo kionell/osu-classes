@@ -1,19 +1,13 @@
-import { IMod } from './IMod';
-
 import { ModBitwise } from './Enums/ModBitwise';
 import { ModType } from './Enums/ModType';
+import { Mod } from './Mod';
 
-export abstract class Cinema implements IMod {
+export abstract class Cinema extends Mod {
   name = 'Cinema';
-
   acronym = 'CN';
-
   bitwise: ModBitwise = ModBitwise.Cinema;
-
   type: ModType = ModType.Fun;
-
   multiplier = 1;
-
   isRanked = false;
 
   incompatibles: ModBitwise = ModBitwise.NoFail |
