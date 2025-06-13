@@ -84,9 +84,9 @@ export class HitStatistics extends Map<HitResult, number> {
       case 'large_bonus': return HitResult.LargeBonus;
       case 'ignore_miss': return HitResult.IgnoreMiss;
       case 'ignore_hit': return HitResult.IgnoreHit;
-      case 'combo_break': return HitResult.IgnoreHit;
-      case 'slider_tail_hit': return HitResult.IgnoreHit;
-      case 'legacy_combo_increase': return HitResult.IgnoreHit;
+      case 'combo_break': return HitResult.ComboBreak;
+      case 'slider_tail_hit': return HitResult.SliderTailHit;
+      case 'legacy_combo_increase': return HitResult.LegacyComboIncrease;
     }
   }
 }
