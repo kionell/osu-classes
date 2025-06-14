@@ -24,5 +24,7 @@ export { Perfect } from './Perfect';
 export { Relax } from './Relax';
 export { SuddenDeath } from './SuddenDeath';
 
+export { APIMod } from './APIMod';
 export { ModCombination } from './ModCombination';
+export { Mod } from './Mod';
 export { IMod } from './IMod';
