@@ -2,7 +2,7 @@ import { IJsonableAPIMod } from './IJsonableAPIMod';
 import { IMod } from './IMod';
 
 /**
- * A class that represents an mod compatible with osu! api.
+ * A class that represents a mod compatible with osu! api.
  * This can be found in score information (online scores or replays). 
  */
 export class APIMod {
